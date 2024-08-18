@@ -1,0 +1,102 @@
+body, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.side-bar > ul > li {
+    position: relative;
+}
+  
+
+.side-bar > ul ul {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    background-color: #666;
+}
+
+body {
+    background-color: white;
+    height: 3333px;
+}
+
+.side-bar {
+    position: fixed;
+    min-height: 100vh;
+    width: 100px;
+    background-color: black;
+    transition: .5s;
+}
+
+.side-bar ul > li > a {
+    display: block;
+    color: white;
+    font-size: 1.7rem;
+    padding: 10px 20px;
+    white-space: nowrap;
+}
+
+.side-bar {
+    position: fixed;
+    min-height: 100vh;
+    width: 100px;
+    background-color: #555;
+    overflow: hidden;
+    transition: .5s;
+}
+
+.side-bar:hover {
+    width: 270px;
+    overflow: visible;
+}
+
+.side-bar ul > li:hover > a {
+    background-color: #888;
+}
+
+.side-bar > ul > li:hover > ul {
+    display: block;
+}
+
+.side-bar > ul > li > a > span:last-child {
+    opacity: 0;
+    transition: .5s .1s;
+}
+
+.side-bar:hover > ul > li > a > span:last-child {
+    opacity: 1;
+}
+
+/* 사이드바 기본 스타일 */
+.side-bar ul li ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #ddd; /* 비활성화 상태에서는 회색 */
+}
+
+/* 클릭된 상태를 표시하는 스타일 */
+.side-bar ul li ul li a.active {
+    background-color: #007bff; /* 선택된 항목의 배경색 */
+    color: white; /* 선택된 항목의 텍스트 색상 */
+    font-weight: bold; /* 선택된 항목의 텍스트를 굵게 */
+}
+
+/* 클릭 시 이동 효과 */
+.side-bar ul li ul li a.clicked {
+    transform: translateX(-10px); /* 왼쪽으로 살짝 이동 */
+    transition: transform 0.2s ease-in-out;
+}
+
+.Chart-container {
+    margin-left: 120px;
+    padding-top: 50px;
+}

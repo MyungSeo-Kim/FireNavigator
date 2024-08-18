@@ -42,7 +42,7 @@ let parser;
 let useMockData = false;
 
 try {
-  port = new SerialPort({ path: "COM8", baudRate: 9600 });
+  port = new SerialPort({ path: "COM9", baudRate: 9600 });
   parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
   parser.on("data", (data) => {
@@ -61,6 +61,10 @@ try {
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));
+});
+
+app.get("/admin2", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "admin2.html"));
 });
 
 app.get("/main", (req, res) => {

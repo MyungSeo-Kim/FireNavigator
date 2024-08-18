@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin</title>
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+    <div class="page">
+        <header>
+            <button type="button" id="info">
+                <img src="logout.png" alt="logout"/>
+                <a href="main.html" style="font-size: 20px"> logout</a>
+            </button>
+            <h1> 
+                <span style="font-size: 40px"> <em>The </em><b>Dongguk</b></span>
+            </h1>
+            <p><span style="font-size:20px">team 연결고리</span> </p>
+        </header>
+    </div>
+
+    
+    <div class="admin_mainpage">
+        <div class="admin-container">
+            <object data="sensordata.html" title="sensordata" ></object>
+            <button class="close-btn">X</button>
+        </div>
+        
+        <div class="admin-container">
+            <object data="main.html" title="main" ></object>
+            <button class="close-btn">X</button>
+        </div>
+
+        <div class="admin-container">
+            <object data="main.html" title="main" ></object>
+            <button class="close-btn">X</button>
+        </div>
+
+        <div class="admin-container">
+            <object data="main.html" title="main" ></object>
+            <button class="close-btn">X</button>
+        </div>
+
+    </div>
+
+    <script>
+        //admin 페이지 팝업창을 위한 코드 
+
+        document.querySelectorAll('.admin-container').forEach(container => {
+            // admin-container를 클릭했을 때 확대
+            container.addEventListener('click', function() {
+                this.classList.add('expanded');
+            });
+
+            // 닫기 버튼 클릭 시 현재 컨테이너의 expanded 클래스 제거
+            container.querySelector('.close-btn').addEventListener('click', function(event) {
+                event.stopPropagation(); // 부모 요소로의 클릭 이벤트 전달 방지
+                this.parentElement.classList.remove('expanded'); // 버튼의 부모 요소에서 expanded 클래스 제거
+            });
+        });
+
+    </script>
+
+</body>
+</html>>
