@@ -104,93 +104,53 @@
         </ul>
     </aside>
 
-    <div class="Chart-container" style="text-align: center;">
-        <h2>SensorData Chart</h2>
+    <div id="CCTV-container" style="text-align: center;">
+        <h2> CCTV</h2>
         <p id="selected-node">Selected Node: None</p>
-        <canvas id="Chart" width="800" height="400"></canvas>
+        <video autoplay="true" id="videoElement"></video>
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var ctx = document.getElementById('Chart').getContext('2d');
-        var Chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [], // 초기 라벨(시간)은 비워둠
-                datasets: [{
-                    label: 'Signal',
-                    data: [], // 초기 데이터는 비워둠
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1,
-                    fill: false,
-                    lineTension: 0.1
-                }]
-            },
-            options: {
-                animation: true, // 실시간 성능을 위해 애니메이션 비활성화
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom'
-                    }
-                }
+
+        var video = document.querySelector("#videoElement");
+
+        function resetVideo() {
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
+        }
+
+        function startVideoUpdates() {
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                    })
+                    .catch(function (err0r) {
+                        console.log("Something went wrong!");
+                    });
+            }
+            else {
+                console.log("getUserMedia not supported on your browser!");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // 페이지 로드 시 기본적으로 "1floor-node1"을 선택
+            const defaultNode = document.getElementById('1floor-node1');
+            if (defaultNode) {
+                defaultNode.click(); // 기본적으로 node1을 클릭한 것처럼 처리
             }
         });
-
-        let dataIndex = 0;
-        let intervalID;
-
-        function addData(chart, label, data) {
-            if (chart.data.labels.length > 100) { // 최대 데이터 포인트 수를 100으로 제한
-                chart.data.labels.shift(); // 가장 오래된 라벨 제거
-                chart.data.datasets.forEach((dataset) => {
-                    dataset.data.shift(); // 가장 오래된 데이터 포인트 제거
-                });
-            }
-
-            chart.data.labels.push(label);
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.push(data);
-            });
-            chart.update();
-        }
-
-        function resetChart() {
-            dataIndex = 0;
-            Chart.data.labels = [];
-            Chart.data.datasets.forEach((dataset) => {
-                dataset.data = [];
-            });
-            Chart.update(); // 기존 데이터 삭제 후 차트를 업데이트하여 리셋 효과
-            setTimeout(() => {
-                Chart.clear(); // 차트를 완전히 지운 후에 다시 그리기
-            }, 100); // 0.1초 후에 차트를 완전히 지움
-        }
-
-        function startDataUpdates() {
-            intervalID = setInterval(function () {
-                const newData = Math.sin(dataIndex * 0.1) * 10;
-                addData(Chart, dataIndex, newData);
-                dataIndex++;
-            }, 200);
-        }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                // 페이지 로드 시 기본적으로 "1floor-node1"을 선택
-                const defaultNode = document.getElementById('1floor-node1');
-                if (defaultNode) {
-                    defaultNode.click(); // 기본적으로 node1을 클릭한 것처럼 처리
-                }
-            });
 
         document.querySelectorAll('.side-bar ul li ul li a').forEach(node => {
             node.addEventListener('click', function (event) {
                 event.preventDefault();
 
-                clearInterval(intervalID); // 이전 데이터 업데이트 중단
-                resetChart(); // 차트 초기화
-                startDataUpdates(); // 새로운 데이터 업데이트 시작
+                resetVideo();
+                startVideoUpdates();
 
                 // 기존에 선택된 항목에서 'active' 클래스를 제거
                 document.querySelectorAll('.side-bar ul li ul li a').forEach(item => {
@@ -223,8 +183,7 @@
             });
         });
 
-        // 초기 데이터 업데이트 시작
-        startDataUpdates();
+
 
     </script>
 
