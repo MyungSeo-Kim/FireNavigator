@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>일반 사용자용 페이지-불 났을 경우2</title>
+    <link rel="stylesheet" href="fire.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header>
+          <a style="font-size: 50px">대피경로</a>
+        <h1>
+          <span style="font-size: 40px"><em>The </em><b>Dongguk</b></span></span>
+        </h1>
+        <p><span style="font-size: 20px">team 연결고리</span></p>
+      </header>
+    </div>
+    <div class="container">
+      <aside class="sidebar">
+        <div class="search-bar">
+          <input type="text" placeholder="매장 이름을 입력하세요" />
+          <button class="search-button">&#128269;</button>
+        </div>
+        <ul class="floor-list">
+          <li class="floor-item" onclick="selectFloor(this, 'floor4.png')">
+            4 floor
+          </li>
+          <li class="floor-item" onclick="selectFloor(this, 'floor3.png')">
+            3 floor
+          </li>
+          <li class="floor-item" onclick="selectFloor(this, 'floor2.png')">
+            2 floor
+          </li>
+          <li
+            class="floor-item active"
+            onclick="selectFloor(this, 'floor1.png')"
+          >
+            1 floor
+          </li>
+          <li class="floor-item" onclick="selectFloor(this, 'floor1.png')">
+            B1 floor
+          </li>
+          <li class="floor-item" onclick="selectFloor(this, 'floor1.png')">
+            B2 floor
+          </li>
+        </ul>
+        <div class="sos-button" onclick="openSOSPopup()">
+          <img src="sos.jpg" alt="SOS 도움 요청" />
+          <div class="sos-text">
+            <strong>SOS 도움 요청</strong>
+            <br />탈출이 어려울 경우,<br />바로 신고하기
+          </div>
+        </div>
+        <div class="nav">
+          <ul>
+            <li><img src="escape.jpg" style="width: 50px;"><span>비상구</span></li>
+            <li><img src="fire.jpg" style="width: 50px;"><span>소화기</span></li>
+          </ul>
+        </div>
+      </aside>
+      <main class="map-container">
+        <img
+          id="mapImage"
+          src="floor1.png"
+          alt="Floor Map"
+          class="map-image"
+        />
+      </main>
+    </div>
+<!--sos 팝업-->
+<!-- Pop-up container -->
+<div id="sosPopup" class="popup">
+  <div class="popup-content">
+    <h2>SOS 요청</h2>
+    <p>
+      현재 위치의 매장명 또는 노드 번호를 작성해주시고 가능하시다면 주변 사람들의 상황도 함께 작성해주세요.
+    </p>
+    <!-- 매장명/노드 번호 입력 -->
+    <div class="input-group">
+      <label for="storeOrNode">매장명/노드 번호</label>
+      <input type="text" id="storeOrNode" placeholder="매장명 또는 노드 번호 입력"/>
+    </div>
+    <!-- 현재 상황 입력 -->
+    <div class="input-group">
+      <label for="currentSituation">현재 상황</label>
+      <textarea id="currentSituation" placeholder="현재 상황을 작성해 주세요"></textarea>
+    </div>
+    <!-- 버튼들 -->
+    <div class="pop-button close-button" onclick="closeSOSPopup()">닫기</div>
+    <div class="pop-button sos-button" onclick="submitSOS()">SOS 요청</div>
+  </div>
+</div>
+
+
+    <script src="fire.js"></script>
+  </body>
+</html>

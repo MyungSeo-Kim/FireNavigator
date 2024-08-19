@@ -6,19 +6,16 @@ document
     const userName = document.querySelector('input[name="userName"]').value;
 
     if (userName === "1234") {
-      const adminWindow = window.open("admin.html", "_blank");
+      const adminWindow = window.open("admin2.html", "_blank");
       if (adminWindow) {
         window.close();
       } else {
         alert("팝업이 차단되었습니다. 팝업 차단을 해제하고 다시 시도해주세요.");
-    }
+      }
     } else {
-        alert("잘못된 관리자 번호입니다.");
-}
+      alert("잘못된 관리자 번호입니다.");
     }
-    );
-
-
+  });
 // 로그인창
 document.getElementById("info").addEventListener("click", function () {
   document.querySelector(".login-wrapper").classList.toggle("active");
@@ -36,10 +33,8 @@ function selectFloor(element, mapImage) {
     floor.classList.remove("active");
   });
 
-  // ?   ??   ?  ?  ?   active ?  ?  ?   추 ??
   element.classList.add("active");
 
-  //  ? ?  미 ??  ? ?
   const mapImageElement = document.getElementById("mapImage");
   mapImageElement.src = mapImage;
 }
@@ -80,7 +75,6 @@ function showSection(sectionId) {
 }
 
 function showNodeData(nodeId) {
-  // 초기 ?  ?  ?   로드 (?  ?   ?  ?   ?   초기?  )
   const data = {
     labels: [],
     datasets: [
@@ -140,17 +134,14 @@ function updateChart(data) {
   });
 }
 
-// 초기 ?  ?  ?   로드
 showNodeData("node1");
 
-// ?  ?   ? ?  ?  ?   ?  ?  
 const socket = io();
 socket.on("arduinoData", (data) => {
   const node1Data = data.find((node) => node.node === "Node1");
   if (node1Data) {
     const currentTime = new Date().toLocaleTimeString();
     if (sensorChart.data.labels.length > 10) {
-      // 최근 10개의 ?  ?  ?   ? ?   ?
       sensorChart.data.labels.shift();
       sensorChart.data.datasets.forEach((dataset) => dataset.data.shift());
     }
@@ -161,5 +152,3 @@ socket.on("arduinoData", (data) => {
     sensorChart.update();
   }
 });
-
-

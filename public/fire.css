@@ -1,0 +1,343 @@
+/* Style the header */
+header {
+    position: fixed; /* Fixes the header at the top */
+    top: 0; /* Aligns the header to the top of the viewport */
+    width: 100%; /* Full width */
+    background-color: #f8f8f8; /* Background color for the header */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+    z-index: 1000;
+    padding: 10px 20px; /* Adds some padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px; /* Set a fixed height for the header */
+  }
+  
+  header a {
+    color: rgb(253, 6, 6);
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 8px; /* Space between image and text */
+  }
+  
+  h1 span {
+    text-align: center;
+    font-size: 50px;
+    text-transform: uppercase;
+    color: #222;
+    letter-spacing: 1px;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+  }
+  h1 em {
+    font-size: 20px;
+  }
+  
+  p span {
+    margin-right: 30px; /* Align the last item to the right */
+  }
+  
+  .body {
+    font-family: Arial, sans-serif;
+    padding-top: 60px; /* Adds padding equal to the header height */
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    display: flex;
+    width: 100000%;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccccccde;
+    border-radius: 4px;
+  }
+  
+  .search-bar .search-button {
+    line-height: 200px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .floor-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .floor-item {
+    padding: 10px;
+    background-color: #f8f8f8;
+    margin-bottom: 5px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .floor-item.active {
+    background-color: #333;
+    color: #f8f2f2;
+  }
+  
+  .nav {
+    margin-top: auto;
+    padding-top: 20px;
+  }
+  
+  .nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .nav li {
+    text-align: center;
+  }
+  
+  .nav img {
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+    height: auto;
+  }
+  
+  .nav span {
+    display: block;
+    font-size: 12px;
+    color: #333;
+    margin-top: 8px;
+  }
+  
+  .map-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .map-image {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+  }
+  
+  /* 기본 스타일 설정 */
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* 사이드바 스타일 */
+  .sidebar {
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .header {
+    text-align: center;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-item {
+    padding: 10px;
+    background-color: #f8f8f8;
+    margin-bottom: 5px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .menu-item.active {
+    background-color: #d3c9ff;
+    color: #fff;
+  }
+  
+  .floor-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .floor-item {
+    padding: 10px;
+    background-color: #f8f8f8;
+    margin-bottom: 5px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .content-section {
+    display: none;
+  }
+  
+  .content-section.active {
+    display: block;
+  }
+  
+  .sos-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 50%; /* margin-top으로 조정 */
+  }
+  
+  .sos-button img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .sos-button:hover {
+    background-color: #ffcccc; /* 호버 효과 */
+  }
+  
+  .sos-text {
+    color: black;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .sos-text strong {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+  }
+  
+  .popup {
+    display: none; /* 처음에는 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    width: 80%;
+    max-width: 500px;
+    text-align: left;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .input-group input,
+  .input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  .input-group textarea {
+    resize: vertical;
+    height: 100px;
+  }
+  
+  .input-group input:focus,
+  .input-group textarea:focus {
+    border-color: #666;
+    outline: none;
+  }
+  
+  .input-group textarea {
+    resize: vertical;
+    height: 100px;
+  }
+  
+  /* 기존 스타일 유지 */
+  .pop-button {
+    background-color: #ff4747;
+    color: white;
+    padding: 3px 3px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    bottom: 10px; /* 동일한 bottom 값으로 위치 조정 */
+  }
+  
+  /* 닫기 버튼을 왼쪽 아래에 배치 */
+  .pop-button.close-button {
+    left: 10px;
+  }
+  
+  /* SOS 요청 버튼 */
+  .pop-button.sos-button {
+    right: 10px;
+  }
+  

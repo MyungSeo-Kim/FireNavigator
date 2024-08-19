@@ -67,6 +67,11 @@ app.get("/admin2", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "admin2.html"));
 });
 
+app.get("/fire", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "fire.html"));
+});
+
+
 app.get("/main", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));
 });

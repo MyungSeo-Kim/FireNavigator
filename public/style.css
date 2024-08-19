@@ -1,6 +1,7 @@
 /* 기본 스타일 설정 */
 /* Reset default margin and padding */
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -41,7 +42,7 @@ header {
 
 .login-wrapper > h2 {
   font-size: 40px;
-  color: #6a24fe;
+  color: #000000;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -60,7 +61,7 @@ header {
 #login-form > input[type="submit"] {
   color: #fff;
   font-size: 16px;
-  background-color: #6a24fe;
+  background-color: #9e9a9a;
   margin-top: 20px;
 }
 .close-btn {
@@ -145,7 +146,7 @@ p span {
 .search-bar input {
   flex: 1;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccccccde;
   border-radius: 4px;
 }
 
@@ -173,8 +174,8 @@ p span {
 }
 
 .floor-item.active {
-  background-color: #d3c9ff;
-  color: #fff;
+  background-color: #333;
+  color: #f8f2f2;
 }
 
 .nav {
@@ -299,67 +300,3 @@ body {
 .content-section.active {
   display: block;
 }
-
-
-.admin_mainpage {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 20px;
-  padding: 20px;
-  margin-top: 100px;
-  margin: 100px auto 0 auto;
-}
-
-.admin-container {
-  position: relative;
-  border: 1px solid #ccc;
-  overflow: hidden;
-  cursor: pointer;
-  padding: 10px; /* 클릭 영역을 넓히기 위해 여백 추가 */
-  /* background-color: rgba(0, 255, 0, 0.2); 임시 배경색 추가 */
-}
-
-.admin-container object {
-  width: 700px;
-  height: 100%;
-  transition: all 0.3s ease;  /* 애니메이션속도조절 */
-}
-
-/* .admin_mainpage object {
-  width: 700px;
-  height: 100%;
-  border: 1px solid #ccc;
-} */
-
-.admin-container.expanded {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 45%;
-  height: 80%;
-  z-index: 1000;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.close-btn {
-  display: none; /* 초기 상태에서는 숨김 */
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  /* background-color: #ccc; */
-  color: black;
-  /* border: 1px solid #000; */
-  padding: 5px 10px;
-  cursor: pointer;
-  /* z-index: 1001; */
-  font-size: 16px;
-}
-
-.admin-container.expanded .close-btn {
-  display: block; /* 팝업창이 커졌을 때 보이도록 */
-}
-
