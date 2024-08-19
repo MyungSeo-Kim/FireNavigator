@@ -41,16 +41,19 @@ let port;
 let parser;
 let useMockData = false;
 
-try {
+// 시리얼 포트 연결 시도
+try { 
   port = new SerialPort({ path: "COM9", baudRate: 9600 });
+  // readline parser로 데이터를 줄 단위로 파싱
   parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
-  parser.on("data", (data) => {
+  parser.on("data", (data) => {// 아두이노 데이터 수신 시
+    //console.log('Received data from Arduino:', data);
     const parsedData = parseArduinoData(data);
-    io.emit("arduinoData", parsedData);
+    io.emit("arduinoData", parsedData); // 클라이언트로 데이터 전송
   });
-
-  port.on("error", (err) => {
+  // 시리얼 포트 에러 시 mock 데이터 사용
+  port.on("error", (err) => { 
     console.error("Serial port error:", err.message);
     useMockData = true;
   });
@@ -59,38 +62,20 @@ try {
   useMockData = true;
 }
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "main.html"));
-});
+// http GET 요청 처리-> HTML 파일 제공 함수
+const sendHtmlFile = (res, fileName) => {
+  res.sendFile(path.join(__dirname, "public", fileName));
+};
 
-app.get("/admin2", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "admin2.html"));
-});
-
-app.get("/fire", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "fire.html"));
-});
-
-
-app.get("/main", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "main.html"));
-});
-
-app.get("/page1", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "page1.html"));
-});
-
-app.get("/page2", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "page2.html"));
-});
-
-app.get("/page3", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "page3.html"));
-});
-
-app.get("/test", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "test.html"));
-});
+// http GET 요청 처리
+app.get("/", (req, res) => sendHtmlFile(res, "main.html"));
+app.get("/admin2", (req, res) => sendHtmlFile(res, "admin2.html"));
+app.get("fire", (req, res) => sendHtmlFile(res, "fire.html"));
+app.get("/main", (req, res) => sendHtmlFile(res, "main.html"));
+app.get("/page1", (req, res) => sendHtmlFile(res, "page1.html"));
+app.get("/page2", (req, res) => sendHtmlFile(res, "page2.html"));
+app.get("/page3", (req, res) => sendHtmlFile(res, "page3.html"));
+app.get("/test", (req, res) => sendHtmlFile(res, "test.html"));
 
 // 관리자 번호 확인 엔드포인트
 app.post("/check-admin-code", (req, res) => {
