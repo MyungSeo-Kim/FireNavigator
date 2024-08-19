@@ -96,7 +96,33 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
+/* 클릭 시 이동 효과 */
+.side-bar ul li a.clicked {
+    transform: translateX(-10px); /* 왼쪽으로 살짝 이동 */
+    transition: transform 0.2s ease-in-out;
+}
+
 .Chart-container {
-    margin-left: 120px;
+    margin-left: 100px;
+    padding-top: 0;
+}
+
+.CCTV-container {
+    position: relative; /* 부모 요소에 상대적으로 위치를 설정 */
+    margin-left: 500px; /* 왼쪽 마진을 설정하여 사이드바와의 간격을 띄웁니다 */
     padding-top: 50px;
+    width: 400px; /* 사이드바를 제외한 나머지 화면을 차지하도록 설정 */
+    box-sizing: border-box; /* 패딩과 마진을 포함한 크기를 계산 */
+}
+
+
+video {
+    width: 100%;
+    height: auto;
+    background-color: #888;
+}
+
+.buildinginfo {
+    margin-left: 100px;
+    padding-top: 0;
 }
