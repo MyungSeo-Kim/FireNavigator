@@ -76,6 +76,8 @@ app.get("/page1", (req, res) => sendHtmlFile(res, "page1.html"));
 app.get("/page2", (req, res) => sendHtmlFile(res, "page2.html"));
 app.get("/page3", (req, res) => sendHtmlFile(res, "page3.html"));
 app.get("/test", (req, res) => sendHtmlFile(res, "test.html"));
+app.get("/findway", (req, res) => sendHtmlFile(res, "findway_test.html"));
+
 
 const stores = {
   '1F' : {
@@ -115,6 +117,7 @@ const stores = {
     '4-7': { name: 'DEF Store', x: 400, y: 500 }
   }
 }
+
 
 app.get('/search-store', (req, res) => {
   const { query, floor } = req.query;
