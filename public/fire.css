@@ -341,3 +341,17 @@ header {
     right: 10px;
   }
   
+  .flame-icon {
+    position: absolute;
+    width: 50px; /* 불꽃 이미지의 크기를 조절 */
+    height: 50px;
+    z-index: 10001; /* 이미지가 다른 요소들 위에 오도록 설정 */
+}
+
+.arrow-icon {
+  position: absolute; /* 절대 위치 지정, map-container 내부에서 위치 조절 */
+  width: 50px; /* 화살표 이미지의 크기 */
+  height: 50px; /* 화살표 이미지의 높이 */
+  z-index: 10001; /* 이미지가 다른 요소들 위에 오도록 설정 */
+  transform-origin: center; /* 화살표 회전의 기준점을 이미지의 중심으로 설정 */
+}

@@ -71,6 +71,10 @@ app.get("/fire", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "fire.html"));
 });
 
+app.get("/findway", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "findway_test.html"));
+});
+
 
 app.get("/main", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));

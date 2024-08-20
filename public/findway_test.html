@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Route Finder with SOS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #result {
+            white-space: pre-wrap; /* Preserve formatting */
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+        }
+        #sosResult {
+            white-space: pre-wrap;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffcccc;
+            border: 1px solid #cc0000;
+            color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Escape Route Finder</h1>
+    <p>Enter the nodes where fire has occurred (comma-separated):</p>
+    <input type="text" id="fireNodesInput" placeholder="e.g., 2, 3" />
+    <button onclick="calculateEscapeRoutes()">Calculate Escape Routes</button>
+
+    <div id="result"></div>
+    <div id="sosResult"></div>
+
+    <script src="findway.js"></script>
+</body>
+</html>
