@@ -216,19 +216,7 @@ p span {
   align-items: center; /* 가운데 정렬 */
   position: relative;
 }
-.map-container img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.map-container div {
-  position: absolute;
-  background-color: red;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
+
 .map-image {
   width: 80%; /* 맵 크기를 줄임 */
   height: auto;
