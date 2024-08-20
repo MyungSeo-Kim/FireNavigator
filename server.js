@@ -77,6 +77,67 @@ app.get("/page2", (req, res) => sendHtmlFile(res, "page2.html"));
 app.get("/page3", (req, res) => sendHtmlFile(res, "page3.html"));
 app.get("/test", (req, res) => sendHtmlFile(res, "test.html"));
 
+const stores = {
+  '1F' : {
+    '1-1': { name: 'ABC Store', x: 100, y: 200 },
+    '1-2': { name: 'DEF Store', x: 200, y: 300 },
+    '1-3': { name: 'GHI Store', x: 150, y: 250 },
+    '1-4': { name: 'JKL Store', x: 250, y: 350 },
+    '1-5': { name: 'MNO Store', x: 300, y: 400 },
+    '1-6': { name: 'PQR Store', x: 350, y: 450 },
+    '1-7': { name: 'STU Store', x: 400, y: 500 }
+  },
+  '2F' : {
+    '2-1': { name: 'VWX Store', x: 100, y: 200 },
+    '2-2': { name: 'YZA Store', x: 200, y: 300 },
+    '2-3': { name: 'BCD Store', x: 150, y: 250 },
+    '2-4': { name: 'EFG Store', x: 250, y: 350 },
+    '2-5': { name: 'HIJ Store', x: 300, y: 400 },
+    '2-6': { name: 'KLM Store', x: 350, y: 450 },
+    '2-7': { name: 'NOP Store', x: 400, y: 500 }
+  },
+  '3F' : {
+    '3-1': { name: 'QRS Store', x: 100, y: 200 },
+    '3-2': { name: 'TUV Store', x: 200, y: 300 },
+    '3-3': { name: 'WXY Store', x: 150, y: 250 },
+    '3-4': { name: 'ZAB Store', x: 250, y: 350 },
+    '3-5': { name: 'CDE Store', x: 300, y: 400 },
+    '3-6': { name: 'FGH Store', x: 350, y: 450 },
+    '3-7': { name: 'IJK Store', x: 400, y: 500 }
+  },
+  '4F' : {
+    '4-1': { name: 'LMN Store', x: 100, y: 200 },
+    '4-2': { name: 'OPQ Store', x: 200, y: 300 },
+    '4-3': { name: 'RST Store', x: 150, y: 250 },
+    '4-4': { name: 'UVW Store', x: 250, y: 350 },
+    '4-5': { name: 'XYZ Store', x: 300, y: 400 },
+    '4-6': { name: 'ABC Store', x: 350, y: 450 },
+    '4-7': { name: 'DEF Store', x: 400, y: 500 }
+  }
+}
+
+app.get('/search-store', (req, res) => {
+  const { query, floor } = req.query;
+  const floorStores = stores[floor] || {}; // 해당 층의 매장 정보 없으면 빈 객체 반환
+  let storeData = null;
+
+  for (const storeKey in floorStores) { // 매장 정보 객체 순회
+    if (floorStores[storeKey].name === query) {
+      storeData = floorStores[storeKey];
+      break;
+    }
+  }
+
+  res.json(storeData);
+});
+
+// SOS 알림 전송 엔드포인트
+app.post('/send-sos', (req, res) => {
+  const { node } = req.body;
+  io.emit('sos-alert', { node }); // 모든 연결된 클라이언트에 SOS 알림 전송
+  res.json({ success: true });
+});
+
 // 관리자 번호 확인 엔드포인트
 app.post("/check-admin-code", (req, res) => {
   const { code } = req.body;

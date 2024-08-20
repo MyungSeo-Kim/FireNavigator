@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>일반 사용자용 페이지-메인</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="page">
@@ -35,22 +36,20 @@
     <div class="container">
       <aside class="sidebar">
         <div class="search-bar">
-          <input type="text" placeholder="매장 이름을 입력하세요" />
-          <button class="search-button">&#128269;</button>
+          <input type="text" placeholder="매장 이름을 입력하세요" id="store-search-input"/>
+          <button class="search-button" onclick="searchStore()">&#128269;</button>
         </div>
         <ul class="floor-list">
-          <li class="floor-item" onclick="selectFloor(this, 'floor4.png')">
+          <li class="floor-item" data-floor="4F"onclick="selectFloor(this, 'floor4.png')">
             4 floor
           </li>
-          <li class="floor-item" onclick="selectFloor(this, 'floor3.png')">
+          <li class="floor-item" data-floor="3F" onclick="selectFloor(this, 'floor3.png')">
             3 floor
           </li>
-          <li class="floor-item" onclick="selectFloor(this, 'floor2.png')">
+          <li class="floor-item" data-floor="2F" onclick="selectFloor(this, 'floor2.png')">
             2 floor
           </li>
-          <li
-            class="floor-item active"
-            onclick="selectFloor(this, 'floor1.png')"
+          <li class="floor-item active" data-floor="1F" onclick="selectFloor(this, 'floor1.png')"
           >
             1 floor
           </li>
@@ -77,6 +76,5 @@
         />
       </main>
     </div>
-    <script src="script.js"></script>
   </body>
 </html>
