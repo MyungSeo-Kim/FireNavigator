@@ -126,3 +126,46 @@ video {
     margin-left: 100px;
     padding-top: 0;
 }
+
+.sos-list {
+    padding: 20px;
+}
+
+.sos-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.node-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.node-number {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    white-space: normal; /* 텍스트 줄 바꿈 허용 */
+    word-break: keep-all; /* 단어가 잘리지 않도록 함 */
+}
+
+.node-message {
+    font-size: 1rem;
+    line-height: 1.4;
+    white-space: normal;
+    word-break: keep-all;
+}
+
+.timestamp {
+    color: gray;
+    font-size: 0.9rem;
+    margin-left: 20px;
+    align-self: flex-end; /* 타임스탬프를 아래쪽에 정렬 */
+}

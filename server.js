@@ -134,6 +134,8 @@ app.get('/search-store', (req, res) => {
   res.json(storeData);
 });
 
+
+
 // SOS 알림 전송 엔드포인트
 app.post('/send-sos', (req, res) => {
   const { node } = req.body;
@@ -185,6 +187,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("A user disconnected");
   });
+
+  socket.on("sosData", function(sosdata) {
+    // console.log(sosdata);
+    io.emit('sosData', sosdata);
+  })
+
 });
 
 server.listen(3000, () => {
