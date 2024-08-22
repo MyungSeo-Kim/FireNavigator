@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOS List</title>
     <link rel="stylesheet" href="adminStyle.css" />
 </head>
+
 <body>
 
     <div style="text-align: center;">
         <h2>SOS List</h2>
         <h4 id="clock" style="color: black;">clock</h4>
     </div>
-    
+
+    <div class="sos-list">
+        <!-- 리스트 아이템이 여기에 동적으로 추가됩니다 -->
+    </div>
+
     <script>
         var Target = document.getElementById("clock");
         function clock() {
@@ -28,13 +34,40 @@
             var minutes = time.getMinutes();
             var seconds = time.getSeconds();
 
-            Target.innerText = 
-            `${year}년 ${month + 1}월 ${date}일 ${week[day]}요일 ` +
-            `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-                
+            Target.innerText =
+                `${year}년 ${month + 1}월 ${date}일 ${week[day]}요일 ` +
+                `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+
         }
         clock();
         setInterval(clock, 1000); // 1초마다 실행
+
+        function addSOSItem(nodeNumber, message, timestamp) {
+            const sosList = document.querySelector('.sos-list');
+
+            // 새로운 아이템을 생성합니다.
+            const sosItem = document.createElement('div');
+            sosItem.classList.add('sos-item');
+
+            sosItem.innerHTML = `
+        <div class="node-info">
+            <div class="node-number">${nodeNumber}</div>
+            <div class="node-message">${message}</div>
+        </div>
+        <div class="timestamp">${timestamp}</div>
+    `;
+
+            // 리스트에 아이템을 추가합니다.
+            sosList.appendChild(sosItem);
+        }
+
+        // 예시로 데이터를 추가해봅니다.
+        addSOSItem(1, 'node 1 - (구조요청)', '24.09.12(화) 12:55');
+        addSOSItem(4, 'node 4 - (환자발생)', '24.09.12(화) 13:02');
+
+
+
     </script>
 </body>
+
 </html>
