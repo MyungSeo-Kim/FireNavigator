@@ -43,7 +43,7 @@ let useMockData = false;
 
 // 시리얼 포트 연결 시도
 try { 
-  port = new SerialPort({ path: "COM9", baudRate: 9600 });
+  port = new SerialPort({ path: "COM5", baudRate: 9600 });
   // readline parser로 데이터를 줄 단위로 파싱
   parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
@@ -213,30 +213,19 @@ function parseArduinoData(data) {
 }
 
 function generateMockData() {
-  return [
-    {
-      node: "Node1",
+  const nodes = [];
+  const nodeCount = 6; // 노드 개수 설정
+
+  for (let i = 1; i <= nodeCount; i++) {
+    nodes.push({
+      node: `Node${i}`,
       gas: Math.random() * 1000,
       flame: Math.random() > 0.5 ? 1 : 0,
       temperature: 20 + Math.random() * 20,
       humidity: 50 + Math.random() * 50,
       isFire: Math.random() > 0.5,
-    },
-    {
-      node: "Node2",
-      gas: Math.random() * 1000,
-      flame: Math.random() > 0.5 ? 1 : 0,
-      temperature: 20 + Math.random() * 20,
-      humidity: 50 + Math.random() * 50,
-      isFire: Math.random() > 0.5,
-    },
-    {
-      node: "Node3",
-      gas: Math.random() * 1000,
-      flame: Math.random() > 0.5 ? 1 : 0,
-      temperature: 20 + Math.random() * 20,
-      humidity: 50 + Math.random() * 50,
-      isFire: Math.random() > 0.5,
-    },
-  ];
+    });
+  }
+
+  return nodes;
 }
