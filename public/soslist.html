@@ -19,6 +19,8 @@
         <!-- 리스트 아이템이 여기에 동적으로 추가됩니다 -->
     </div>
 
+
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
     <script>
         var Target = document.getElementById("clock");
         function clock() {
@@ -50,20 +52,36 @@
             sosItem.classList.add('sos-item');
 
             sosItem.innerHTML = `
-        <div class="node-info">
-            <div class="node-number">${nodeNumber}</div>
-            <div class="node-message">${message}</div>
-        </div>
-        <div class="timestamp">${timestamp}</div>
-    `;
+                <div class="node-info">
+                    <div class="node-number">${nodeNumber}</div>
+                    <div class="node-message">${message}</div>
+                </div>
+                <div class="timestamp">${timestamp}</div>
+            `;
+
 
             // 리스트에 아이템을 추가합니다.
             sosList.appendChild(sosItem);
         }
 
+        const socket = io(); // socket 변수를 초기화
+
+        // 소켓을 통해 서버로부터 'sosData' 이벤트를 수신합니다.
+        socket.on("sosData", (data) => {
+            // console.log(data);
+            const time = new Date().toLocaleString();
+
+            const nodeinfo = data[0];
+            const message = data[1];
+
+            // 분리된 데이터를 사용하여 addSOSItem 함수를 호출
+            addSOSItem(nodeinfo,message, time);
+        });
+
+
         // 예시로 데이터를 추가해봅니다.
-        addSOSItem(1, 'node 1 - (구조요청)', '24.09.12(화) 12:55');
-        addSOSItem(4, 'node 4 - (환자발생)', '24.09.12(화) 13:02');
+        // addSOSItem(1, 'node 1 - (구조요청)', '24.09.12(화) 12:55');
+        // addSOSItem(4, 'node 4 - (환자발생)', '24.09.12(화) 13:02');
 
 
 
