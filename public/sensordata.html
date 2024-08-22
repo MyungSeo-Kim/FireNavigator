@@ -118,14 +118,44 @@
             type: 'line',
             data: {
                 labels: [], // 초기 라벨(시간)은 비워둠
-                datasets: [{
-                    label: 'Signal',
-                    data: [], // 초기 데이터는 비워둠
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1,
-                    fill: false,
-                    lineTension: 0.1
-                }]
+                datasets: [
+                    {
+                        label: 'CO',
+                        data: [], // 초기 데이터는 비워둠
+                        borderColor: 'rgba(253, 192, 101, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                        lineTension: 0.1
+                    },
+
+                    {
+                        label: 'flame',
+                        data: [], // 초기 데이터는 비워둠
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                        lineTension: 0.1
+                    },
+
+                    {
+                        label: 'humidity',
+                        data: [], // 초기 데이터는 비워둠
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                        lineTension: 0.1
+                    },
+
+                    {
+                        label: 'temperature',
+                        data: [], // 초기 데이터는 비워둠
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                        lineTension: 0.1
+                    }
+
+                ]
             },
             options: {
                 animation: true, // 실시간 성능을 위해 애니메이션 비활성화
@@ -170,19 +200,26 @@
 
         function startDataUpdates() {
             intervalID = setInterval(function () {
-                const newData = Math.sin(dataIndex * 0.1) * 10;
+                const newData = Math.sin(dataIndex * 0.1) * 10;         //여기부분 수정할것!!
                 addData(Chart, dataIndex, newData);
                 dataIndex++;
             }, 200);
         }
 
-            document.addEventListener('DOMContentLoaded', function () {
-                // 페이지 로드 시 기본적으로 "1floor-node1"을 선택
-                const defaultNode = document.getElementById('1floor-node1');
-                if (defaultNode) {
-                    defaultNode.click(); // 기본적으로 node1을 클릭한 것처럼 처리
-                }
-            });
+        socket.on('arduinoData', (data) => {
+            console.log(data);
+            const time = new Data().toLocaleTimeString();
+        }) 
+
+        
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // 페이지 로드 시 기본적으로 "1floor-node1"을 선택
+            const defaultNode = document.getElementById('1floor-node1');
+            if (defaultNode) {
+                defaultNode.click(); // 기본적으로 node1을 클릭한 것처럼 처리
+            }
+        });
 
         document.querySelectorAll('.side-bar ul li ul li a').forEach(node => {
             node.addEventListener('click', function (event) {

@@ -26,6 +26,7 @@ function addFlameIcon(position) {
     mapContainer.appendChild(fireIcon);
 }
 
+
 // 모든 불꽃 이미지를 제거하는 함수
 function removeAllFlameIcons() {
     const mapContainer = document.querySelector(".map-container");
@@ -310,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function calculateEscapeRoutes() {
-    const fireNodesInput = "2,5"; // 화재 발생 노드 입력 (예시)
+    const fireNodesInput = "1"; // 화재 발생 노드 입력 (예시)
     const fireNodes = fireNodesInput.split(',').map(node => node.trim());
 
     // 모든 노드의 화재 상태 초기화
