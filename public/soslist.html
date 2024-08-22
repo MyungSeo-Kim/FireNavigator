@@ -19,6 +19,7 @@
         <!-- 리스트 아이템이 여기에 동적으로 추가됩니다 -->
     </div>
 
+
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
     <script>
         var Target = document.getElementById("clock");
@@ -50,8 +51,6 @@
             const sosItem = document.createElement('div');
             sosItem.classList.add('sos-item');
 
-
-
             sosItem.innerHTML = `
                 <div class="node-info">
                     <div class="node-number">${nodeNumber}</div>
@@ -59,6 +58,7 @@
                 </div>
                 <div class="timestamp">${timestamp}</div>
             `;
+
 
             // 리스트에 아이템을 추가합니다.
             sosList.appendChild(sosItem);
@@ -82,6 +82,7 @@
         // 예시로 데이터를 추가해봅니다.
         // addSOSItem(1, 'node 1 - (구조요청)', '24.09.12(화) 12:55');
         // addSOSItem(4, 'node 4 - (환자발생)', '24.09.12(화) 13:02');
+
 
 
     </script>
