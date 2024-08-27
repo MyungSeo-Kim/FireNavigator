@@ -50,8 +50,10 @@ try {
   parser.on("data", (data) => {// 아두이노 데이터 수신 시
     //console.log('Received data from Arduino:', data);
     const parsedData = parseArduinoData(data);
-    io.emit("arduinoData", parsedData); // 클라이언트로 데이터 전송
-  });
+    if (data.startsWith("Info:")) {
+      const parsedData = parseArduinoData(data);
+      io.emit("arduinoData", parsedData); // 클라이언트로 데이터 전송
+    }  });
   // 시리얼 포트 에러 시 mock 데이터 사용
   port.on("error", (err) => { 
     console.error("Serial port error:", err.message);
@@ -200,7 +202,7 @@ server.listen(3000, () => {
 });
 
 function parseArduinoData(data) {
-  const nodes = data.split(",").filter((d) => d);
+  const nodes = data.replace("Info:", "").split(",").filter((d) => d);
   return nodes.map((node, index) => {
     const gas = Math.floor(node / 100000) % 1000; // 3자리수
     const flame = Math.floor((node % 100000) / 10000); // 1자리수
