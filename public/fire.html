@@ -3,14 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>일반 사용자용 페이지-불 났을 경우2</title>
+    <title>일반 사용자용 페이지-불 났을 경우</title>
     <link rel="stylesheet" href="fire.css" />
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
   </head>
   <body>
+
+    <div id="dangerPopup" class="popup danger-popup">
+      <div class="popup-content">
+          <h2><img src="danger.png" alt="위험강조">위험!</h2>
+          <p>화재가 발생했습니다.<br> 
+          <span class="highlight">매장명</span>
+          <span class="spacer">또는</span>
+          <span class="highlight">노드 번호</span>를 입력하여<br> 탈출경로를 파악하고 대피하십시오!</p>
+          <button onclick="closeDangerPopup()">닫기</button>
+      </div>
+  </div>
+
     <div class="page">
       <header>
-          <a style="font-size: 50px">대피경로</a>
+        <button type="button" id="info">
+          <img src="lock.png" alt="ADMIN 로그인"/>
+          <a style="font-size: 20px">ADMIN</a>
+        </button>
+        <div class="login-wrapper">
+          <button class="close-btn">&times;</button> 
+          <h2>Login</h2>
+          <form id="login-form">
+            <input
+                type="text"
+                name="userName"
+                placeholder="관리자 번호"
+                autofocus
+            />
+            <input type="submit" value="Login" />
+        </form>
+        </div>
         <h1>
           <span style="font-size: 40px"><em>The </em><b>Dongguk</b></span></span>
         </h1>
@@ -20,29 +47,29 @@
     <div class="container">
       <aside class="sidebar">
         <div class="search-bar">
-          <input type="text" placeholder="매장 이름을 입력하세요" />
+          <input type="text" placeholder="현재 매장명 / 노드 번호 입력"/>
           <button class="search-button">&#128269;</button>
         </div>
         <ul class="floor-list">
-          <li class="floor-item" onclick="selectFloor(this, 'floor4.png')">
+          <li class="floor-item" onclick="selectFloor(this, '4f.png')">
             4 floor
           </li>
-          <li class="floor-item" onclick="selectFloor(this, 'floor3.png')">
+          <li class="floor-item" onclick="selectFloor(this, '3f.png')">
             3 floor
           </li>
-          <li class="floor-item" onclick="selectFloor(this, 'floor2.png')">
+          <li class="floor-item" onclick="selectFloor(this, '2f.png')">
             2 floor
           </li>
           <li
             class="floor-item active"
-            onclick="selectFloor(this, 'floor1.png')"
+            onclick="selectFloor(this, '1f.png')"
           >
             1 floor
           </li>
-          <li class="floor-item" onclick="selectFloor(this, 'floor1.png')">
+          <li class="floor-item" onclick="selectFloor(this, 'map.png')">
             B1 floor
           </li>
-          <li class="floor-item" onclick="selectFloor(this, 'floor1.png')">
+          <li class="floor-item" onclick="selectFloor(this, 'map.png')">
             B2 floor
           </li>
         </ul>
@@ -63,7 +90,7 @@
       <main class="map-container">
         <img
           id="mapImage"
-          src="floor1.png"
+          src="1f.png"
           alt="Floor Map"
           class="map-image"
         />
@@ -95,6 +122,5 @@
 
 
     <script src="fire.js"></script>
-    <script src="firefindway.js"></script>
   </body>
 </html>
