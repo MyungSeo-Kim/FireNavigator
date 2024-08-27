@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>일반 사용자용 페이지-메인</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="page">
@@ -36,20 +35,22 @@
     <div class="container">
       <aside class="sidebar">
         <div class="search-bar">
-          <input type="text" placeholder="매장 이름을 입력하세요" id="store-search-input"/>
-          <button class="search-button" onclick="searchStore()">&#128269;</button>
+          <input type="text" placeholder="매장 이름을 입력하세요" />
+          <button class="search-button" type="submit">&#128269;</button>
         </div>
         <ul class="floor-list">
-          <li class="floor-item" data-floor="4F"onclick="selectFloor(this, 'floor4.png')">
+          <li class="floor-item" onclick="selectFloor(this, '4f.png')">
             4 floor
           </li>
-          <li class="floor-item" data-floor="3F" onclick="selectFloor(this, 'floor3.png')">
+          <li class="floor-item" onclick="selectFloor(this, '3f.png')">
             3 floor
           </li>
-          <li class="floor-item" data-floor="2F" onclick="selectFloor(this, 'floor2.png')">
+          <li class="floor-item" onclick="selectFloor(this, '2f.png')">
             2 floor
           </li>
-          <li class="floor-item active" data-floor="1F" onclick="selectFloor(this, 'floor1.png')"
+          <li
+            class="floor-item active"
+            onclick="selectFloor(this, '1f.png')"
           >
             1 floor
           </li>
@@ -60,6 +61,7 @@
             B2 floor
           </li>
         </ul>
+
         <div class="nav">
           <ul>
             <li><img src="escape.jpg" style="width: 50px;"><span>비상구</span></li>
@@ -68,13 +70,17 @@
         </div>
       </aside>
       <main class="map-container">
-        <img
-          id="mapImage"
-          src="floor1.png"
-          alt="Floor Map"
-          class="map-image"
-        />
-      </main>
+        <img id="mapImage" src="1f.png" alt="Floor Map" class="map-image">
+        <!-- 포인트 이미지를 map-container 내부에 위치시키기 -->
+        <div class="point" id="point1" style="left: 53.2%; top: 18.8%;"></div>
+        <div class="point" id="point2" style="left: 32.35%; top: 60%;"></div>
+        <div class="point" id="point3" style="left: 66.6%; top: 41%;"></div>
+        <div class="point" id="point4" style="left: 52.1%; top: 33.3%;"></div>
+        <div class="point" id="point5" style="left: 42.2%; top: 39%;"></div>
+        <div class="point" id="point6" style="left: 42.8%; top: 49%;"></div>
+        <div class="point" id="point7" style="left: 52.2%; top: 54.3%;"></div>
+    </main>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
