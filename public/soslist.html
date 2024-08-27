@@ -69,13 +69,9 @@
         // 소켓을 통해 서버로부터 'sosData' 이벤트를 수신합니다.
         socket.on("sosData", (data) => {
             // console.log(data);
-            const time = new Date().toLocaleString();
-
-            const nodeinfo = data[0];
-            const message = data[1];
 
             // 분리된 데이터를 사용하여 addSOSItem 함수를 호출
-            addSOSItem(nodeinfo,message, time);
+            addSOSItem(data.nodeinfo, data.message, data.timestamp);
         });
 
 

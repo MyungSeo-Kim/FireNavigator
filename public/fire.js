@@ -18,12 +18,18 @@ function closeSOSPopup() {
   document.getElementById("sosPopup").style.display = "none";
 }
 
+const socket = io();
 
 function submitSOS() {
   const storeOrNode = document.getElementById("storeOrNode").value;
   const currentSituation = document.getElementById("currentSituation").value;
 
-  const sosData = [storeOrNode, currentSituation];
+  // const sosData = [storeOrNode, currentSituation];
+  const sosData = {
+    nodeinfo: storeOrNode,
+    message: currentSituation,
+    timestamp: new Date().toLocaleString()
+  };
 
   if (storeOrNode && currentSituation) {
     // console.log(sosData);
@@ -36,40 +42,6 @@ function submitSOS() {
     alert("모든 필드를 작성해 주세요.");
   }
 }
-
-
-
-// function submitSOS() {
-//   const storeOrNode = document.getElementById("storeOrNode").value;
-//   const currentSituation = document.getElementById("currentSituation").value;
-
-//   if (storeOrNode && currentSituation) {
-//     // 서버로 요청 전송
-//     fetch("/submit-sos", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         storeOrNode: storeOrNode,
-//         currentSituation: currentSituation,
-//         timestamp: new Date().toISOString(), // 요청 시간 기록
-//       }),
-//     })
-//       .then((response) => response.json())
-//       .then((data) => {
-//         if (data.success) {
-//           alert("SOS 요청이 성공적으로 전송되었습니다!");
-//           closeSOSPopup(); // 팝업을 닫습니다.
-//         } else {
-//           alert("SOS 요청 전송에 실패했습니다.");
-//         }
-//       })
-//       .catch((error) => console.error("Error:", error));
-//   } else {
-//     alert("모든 필드를 작성해 주세요.");
-//   }
-// }
 
 document
   .getElementById("login-form")

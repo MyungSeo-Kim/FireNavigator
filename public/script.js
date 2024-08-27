@@ -73,83 +73,9 @@ function showSection(sectionId) {
     .classList.add("active");
 }
 
-function showNodeData(nodeId) {
-  const data = {
-    labels: [],
-    datasets: [
-      {
-        label: "?  ?  ",
-        data: [],
-        borderColor: "red",
-        fill: false,
-      },
-      {
-        label: "CO",
-        data: [],
-        borderColor: "blue",
-        fill: false,
-      },
-      {
-        label: "불꽃",
-        data: [],
-        borderColor: "yellow",
-        fill: false,
-      },
-    ],
-  };
 
-  updateChart(data);
-}
 
-let sensorChart;
-
-function updateChart(data) {
-  const ctx = document.getElementById("sensorChart").getContext("2d");
-  if (sensorChart) {
-    sensorChart.destroy();
-  }
-  sensorChart = new Chart(ctx, {
-    type: "line",
-    data: data,
-    options: {
-      responsive: true,
-      scales: {
-        x: {
-          display: true,
-          title: {
-            display: true,
-            text: "?   ?",
-          },
-        },
-        y: {
-          display: true,
-          title: {
-            display: true,
-            text: " ?",
-          },
-        },
-      },
-    },
-  });
-}
-
-showNodeData("node1");
 const socket = io();
-socket.on("arduinoData", (data) => {
-  const node1Data = data.find((node) => node.node === "Node1");
-  if (node1Data) {
-    const currentTime = new Date().toLocaleTimeString();
-    if (sensorChart.data.labels.length > 10) {
-      sensorChart.data.labels.shift();
-      sensorChart.data.datasets.forEach((dataset) => dataset.data.shift());
-    }
-    sensorChart.data.labels.push(currentTime);
-    sensorChart.data.datasets[0].data.push(node1Data.temperature);
-    sensorChart.data.datasets[1].data.push(node1Data.gas);
-    sensorChart.data.datasets[2].data.push(node1Data.flame);
-    sensorChart.update();
-  }
-});
 
 function searchStore() {
   const query = document.querySelector("#store-search-input").value;
