@@ -136,12 +136,12 @@ app.get('/search-store', (req, res) => {
 
 
 
-// SOS 알림 전송 엔드포인트
-app.post('/send-sos', (req, res) => {
-  const { node } = req.body;
-  io.emit('sos-alert', { node }); // 모든 연결된 클라이언트에 SOS 알림 전송
-  res.json({ success: true });
-});
+// // SOS 알림 전송 엔드포인트
+// app.post('/send-sos', (req, res) => {
+//   const { node } = req.body;
+//   io.emit('sos-alert', { node }); // 모든 연결된 클라이언트에 SOS 알림 전송
+//   res.json({ success: true });
+// });
 
 // 관리자 번호 확인 엔드포인트
 app.post("/check-admin-code", (req, res) => {
@@ -183,10 +183,6 @@ io.on("connection", (socket) => {
       clearInterval(interval);
     });
   }
-
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
 
   socket.on("sosData", function(sosdata) {
     // console.log(sosdata);
