@@ -1,3 +1,9 @@
+window.onload = function () {
+  document.querySelectorAll('.point').forEach(point => {
+    point.style.display = 'none';
+  });
+};
+
 document
   .getElementById("login-form")
   .addEventListener("submit", function (event) {
@@ -27,6 +33,9 @@ document.querySelector(".close-btn").addEventListener("click", function () {
 });
 
 function selectFloor(element, mapImage) {
+  document.querySelectorAll('.point').forEach(point => {
+    point.style.display = 'none';
+  });
   // 모든 floor-item 클래스 요소에서 이전 선택된 층의 active 상태 제거
   const floors = document.querySelectorAll(".floor-item"); // 모든 층 요소 선택
   floors.forEach((floor) => {
@@ -73,54 +82,75 @@ function showSection(sectionId) {
     .classList.add("active");
 }
 
+function showPoint(pointId) {
+  // 모든 포인트를 숨깁니다.
+  document.querySelectorAll('.point').forEach(point => {
+    point.style.display = 'none';
+  });
 
+  // 특정 ID의 포인트를 찾습니다.
+  const pointElement = document.getElementById("point" + pointId);
+  console.log(pointElement);
+  
+  if (pointElement) {
+    pointElement.style.display = 'block'; // 해당 포인트를 표시합니다.
+  } else {
+    console.error(`Point with ID point${pointId} not found.`);
+  }
+}
 
-const socket = io();
+function autoSelectFloor(floor) {
+  let floorElement;
+  let floorImage;
+
+  // 원하는 층에 맞게 요소와 이미지를 설정
+  switch(floor) {
+      case '1F':
+          floorElement = document.querySelector(".floor-item:nth-child(4)");
+          floorImage = '1f.png';
+          break;
+      case '2F':
+          floorElement = document.querySelector(".floor-item:nth-child(3)");
+          floorImage = '2f.png';
+          break;
+      case '3F':
+          floorElement = document.querySelector(".floor-item:nth-child(2)");
+          floorImage = '3f.png';
+          break;
+      case '4F':
+          floorElement = document.querySelector(".floor-item:nth-child(1)");
+          floorImage = '4f.png';
+          break;
+      default:
+          floorElement = document.querySelector(".floor-item:nth-child(4)");
+          floorImage = '1f.png';
+          break;
+  }
+
+  // 선택된 층으로 이동
+  selectFloor(floorElement, floorImage);
+}
+
 
 function searchStore() {
   const query = document.querySelector("#store-search-input").value;
-  const selectedFloor =
-    document.querySelector(".floor-item.active").dataset.floor;
-  console.log(`query: ${query}, selectedFloor: ${selectedFloor}`);
-  fetch(
-    `/search-store?query=${encodeURIComponent(
-      query
-    )}&floor=${encodeURIComponent(selectedFloor)}`
-  )
+  const selectedFloor = document.querySelector(".floor-item.active").dataset.floor;
+
+
+  fetch(`/search-store?query=${encodeURIComponent(query)}`)
     .then((response) => response.json())
     .then((data) => {
       // 서버에서 받은 데이터를 이용해 마커 생성
       console.log(`data: `, data);
-      if (data) {
-        const mapImage = document.getElementById("mapImage");
-        const marker = document.createElement("div");
-        marker.style.position = "absolute";
-        //marker.style.left = `${data.x}px`;
-        //marker.style.top = `${data.y}px`;
-        marker.style.width = "20px";
-        marker.style.height = "20px";
-        marker.style.backgroundColor = "red";
-        marker.style.borderRadius = "50%";
-        marker.style.transform = "translate(-50%, -50%)";
-        mapImage.parentElement.appendChild(marker); // 이미지의 부모 요소에 마커 추가
 
-        // 반응형 이미지 대응
-        const adjustMarkerPosition = () => {
-          const scaleX = mapImage.clientWidth / mapImage.naturalWidth;
-          const scaleY = mapImage.clientHeight / mapImage.naturalHeight;
-          marker.style.left = `${data.x * scaleX}px`;
-          marker.style.top = `${data.y * scaleY}px`;
-        };
-        // 이미지가 로드된 후에 마커 위치 조정
-        if (mapImage.complete) {
-          adjustMarkerPosition();
-        } else {
-          mapImage.addEventListener("load", adjustMarkerPosition);
-        }
-        window.addEventListener("resize", adjustMarkerPosition);
+      if (data) {
+        autoSelectFloor(data.floor);
+        showPoint(data.storeKey[2]); // 검색된 포인트를 표시
       }
+
     })
     .catch((error) => {
       console.error("Error fetching store data:", error);
     });
+
 }
