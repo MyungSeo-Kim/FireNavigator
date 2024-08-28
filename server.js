@@ -83,54 +83,61 @@ app.get("/findway", (req, res) => sendHtmlFile(res, "findway_test.html"));
 
 const stores = {
   '1F' : {
-    '101': { name: 'ABC Store', x: 100, y: 200 },
-    '102': { name: 'DEF Store', x: 200, y: 300 },
-    '103': { name: 'GHI Store', x: 150, y: 250 },
-    '104': { name: 'JKL Store', x: 250, y: 350 },
-    '105': { name: 'MNO Store', x: 300, y: 400 },
-    '106': { name: 'PQR Store', x: 350, y: 450 },
-    '107': { name: 'STU Store', x: 400, y: 500 }
+    '101': { name: '루이비통', x: 310, y: 1200 },      //여기서 x,y 좌표 안쓰는 느낌 
+    '102': { name: '에르메스', x: 200, y: 300 },
+    '103': { name: '디올', x: 150, y: 250 },
+    '104': { name: '프라다', x: 250, y: 350 },
+    '105': { name: '샤넬', x: 300, y: 400 },
+    '106': { name: '버버리', x: 350, y: 450 },
+    '107': { name: '발렌시아가', x: 400, y: 500 }
   },
   '2F' : {
-    '201': { name: 'VWX Store', x: 100, y: 200 },
-    '202': { name: 'YZA Store', x: 200, y: 300 },
-    '203': { name: 'BCD Store', x: 150, y: 250 },
-    '204': { name: 'EFG Store', x: 250, y: 350 },
-    '205': { name: 'HIJ Store', x: 300, y: 400 },
-    '206': { name: 'KLM Store', x: 350, y: 450 },
-    '207': { name: 'NOP Store', x: 400, y: 500 }
+    '201': { name: '보테가베네타', x: 100, y: 200 },
+    '202': { name: '젠틀몬스터', x: 200, y: 300 },
+    '203': { name: '구찌', x: 150, y: 250 },
+    '204': { name: '발렌티노', x: 250, y: 350 },
+    '205': { name: '몽블랑', x: 300, y: 400 },
+    '206': { name: '롤렉스', x: 350, y: 450 },
+    '207': { name: '톰브라운', x: 400, y: 500 }
   },
   '3F' : {
-    '301': { name: 'QRS Store', x: 100, y: 200 },
-    '302': { name: 'TUV Store', x: 200, y: 300 },
-    '303': { name: 'WXY Store', x: 150, y: 250 },
-    '304': { name: 'ZAB Store', x: 250, y: 350 },
-    '305': { name: 'CDE Store', x: 300, y: 400 },
-    '306': { name: 'FGH Store', x: 350, y: 450 },
-    '307': { name: 'IJK Store', x: 400, y: 500 }
+    '301': { name: '꼼데가르송', x: 100, y: 200 },
+    '302': { name: '스톤아일랜드', x: 200, y: 300 },
+    '303': { name: '아미', x: 150, y: 250 },
+    '304': { name: '띠어리', x: 250, y: 350 },
+    '305': { name: 'A.P.C.', x: 300, y: 400 },
+    '306': { name: '송지오', x: 350, y: 450 },
+    '307': { name: '메종키츠네', x: 400, y: 500 }
   },
   '4F' : {
-    '401': { name: 'LMN Store', x: 100, y: 200 },
-    '402': { name: 'OPQ Store', x: 200, y: 300 },
-    '403': { name: 'RST Store', x: 150, y: 250 },
-    '404': { name: 'UVW Store', x: 250, y: 350 },
-    '405': { name: 'XYZ Store', x: 300, y: 400 },
-    '406': { name: 'ABC Store', x: 350, y: 450 },
-    '407': { name: 'DEF Store', x: 400, y: 500 }
+    '401': { name: '나이키', x: 100, y: 200 },
+    '402': { name: '아디다스', x: 200, y: 300 },
+    '403': { name: '퓨마', x: 150, y: 250 },
+    '404': { name: '뉴발란스', x: 250, y: 350 },
+    '405': { name: '리복', x: 300, y: 400 },
+    '406': { name: '휠라', x: 350, y: 450 },
+    '407': { name: '언더아머', x: 400, y: 500 }
   }
 }
 
 
 app.get('/search-store', (req, res) => {
-  const { query, floor } = req.query;
-  const floorStores = stores[floor] || {}; // 해당 층의 매장 정보 없으면 빈 객체 반환
+  const { query } = req.query;
   let storeData = null;
 
-  for (const storeKey in floorStores) { // 매장 정보 객체 순회
-    if (floorStores[storeKey].name === query) {
-      storeData = floorStores[storeKey];
-      break;
+  for (const floor in stores) { // 각 층을 순회
+    const floorStores = stores[floor];
+    for (const storeKey in floorStores) { // 각 층의 매장 정보 객체를 순회
+      if (floorStores[storeKey].name === query) {
+        storeData = {
+          ...floorStores[storeKey], // 기존의 store 정보 복사
+          floor, // 현재 층 정보 추가
+          storeKey // 매장 번호 정보 추가
+        };
+        break;
+      }
     }
+    if (storeData) break; // 매장을 찾으면 더 이상 순회하지 않음
   }
 
   res.json(storeData);
