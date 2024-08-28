@@ -12,39 +12,26 @@ const flamePositions = [
     { node: "w", x: 700, y: 450 }
 ];
 
-// 불꽃 이미지를 특정 위치에 추가하는 함수
-function addFlameIcon(position) {
-    const mapContainer = document.querySelector(".map-container");
-
-    const fireIcon = document.createElement("img");
-    fireIcon.src = "flame.png"; // 불꽃 이미지 파일 경로
-    fireIcon.classList.add("flame-icon");
-    fireIcon.style.left = `${position.x}px`; // X 위치 설정
-    fireIcon.style.top = `${position.y}px`;  // Y 위치 설정
-    fireIcon.alt = `Flame at node ${position.node}`; // 이미지 대체 텍스트 설정
-
-    mapContainer.appendChild(fireIcon);
-}
-
 
 // 모든 불꽃 이미지를 제거하는 함수
 function removeAllFlameIcons() {
-    const mapContainer = document.querySelector(".map-container");
-    const flames = mapContainer.querySelectorAll(".flame-icon");
-    flames.forEach(flame => flame.remove()); // 모든 불꽃 이미지를 제거
+    document.querySelectorAll('.flame').forEach(point => {
+        point.style.display = 'none';
+    });
+
 }
 
 // 특정 노드의 불꽃 이미지를 표시하는 함수
 function showFlameForNode(nodeId) {
-    const position = flamePositions.find(pos => pos.node === nodeId);
-    if (position) {
-        addFlameIcon(position);
+    const flameElement = document.getElementById("flame" + nodeId);
+
+    if (flameElement) {
+        flameElement.style.display = 'block'; // 해당 포인트를 표시합니다.
     } else {
-        console.error(`Node with ID ${nodeId} not found.`);
+        console.error(`Flame with ID flame${nodeId} not found.`);
     }
 }
 
-// 화살표 정보를 담은 배열
 // 화살표 정보를 담은 배열
 const arrowPositions = [
     { node: "1A", x: 985, y: 140, direction: 270 }, // 1->A
@@ -75,35 +62,23 @@ const arrowPositions = [
     { node: "6x", x: 775, y: 140, direction: 0 } // 6->x 
 ];
 
-// 화살표 이미지를 특정 위치에 추가하는 함수
-function addArrowIcon(position) {
-    const mapContainer = document.querySelector(".map-container");
-
-    const arrowIcon = document.createElement("img");
-    arrowIcon.src = "arrow.png"; // 화살표 이미지 파일 경로
-    arrowIcon.classList.add("arrow-icon");
-    arrowIcon.style.left = `${position.x}px`; // X 위치 설정
-    arrowIcon.style.top = `${position.y}px`;  // Y 위치 설정
-    arrowIcon.style.transform = `rotate(${position.direction}deg)`; // 방향 설정
-    arrowIcon.alt = `Arrow at node ${position.node}`; // 이미지 대체 텍스트 설정
-
-    mapContainer.appendChild(arrowIcon);
-}
 
 // 모든 화살표 이미지를 제거하는 함수
 function removeAllArrowIcons() {
-    const mapContainer = document.querySelector(".map-container");
-    const arrows = mapContainer.querySelectorAll(".arrow-icon");
-    arrows.forEach(arrow => arrow.remove()); // 모든 화살표 이미지를 제거
+    // 모든 포인트를 숨깁니다.
+    document.querySelectorAll('.arrow').forEach(point => {
+        point.style.display = 'none';
+    });
+
 }
 
-// 특정 노드의 화살표 이미지를 표시하는 함수
 function showArrowForNode(nodeId) {
-    const position = arrowPositions.find(pos => pos.node === nodeId);
-    if (position) {
-        addArrowIcon(position); // 해당 노드의 위치 및 방향 정보를 사용하여 화살표 추가
+    const arrowElement = document.getElementById("arrow" + nodeId);
+
+    if (arrowElement) {
+        arrowElement.style.display = 'block'; // 해당 포인트를 표시합니다.
     } else {
-        console.error(`Node with ID ${nodeId} not found.`);
+        console.error(`Arrow with ID arrow${nodeId} not found.`);
     }
 }
 
@@ -305,14 +280,16 @@ function findEscapeRoutes(dist, next, nodes, exits) {
     return escapeRoutes;
 }
 
-// 화재 발생 위치를 입력받아 탈출 경로를 계산하는 함수
-document.addEventListener('DOMContentLoaded', function () {
-    calculateEscapeRoutes();
-});
+// // 화재 발생 위치를 입력받아 탈출 경로를 계산하는 함수
+// document.addEventListener('DOMContentLoaded', function () {
+//     calculateEscapeRoutes();
+// });
 
-function calculateEscapeRoutes() {
-    const fireNodesInput = "1"; // 화재 발생 노드 입력 (예시)
-    const fireNodes = fireNodesInput.split(',').map(node => node.trim());
+let calculatedEscapeRoutes = {}; // 각 노드별 최단 경로를 저장할 객체
+
+function calculateEscapeRoutes(fireNodesInput) {
+    console.log(fireNodesInput);
+    const fireNodes = String(fireNodesInput).split(',');
 
     // 모든 노드의 화재 상태 초기화
     for (let node in nodes) {
@@ -359,6 +336,9 @@ function calculateEscapeRoutes() {
             if (shortestRoute.exit === "SOS") {
                 sosNodes.push(node);
             }
+        } else {
+            // 탈출구로 향하는 길이 존재하지 않으면 sosNodes에 추가
+            sosNodes.push(node);
         }
     }
 
@@ -379,5 +359,26 @@ function calculateEscapeRoutes() {
     // SOS 노드 표시
     if (sosNodes.length > 0) {
         console.log("SOS 노드:", sosNodes.join(", "));
+    }
+}
+
+
+// 특정 노드에 대한 경로만 표시하는 함수
+function displayEscapeRouteForCurrentNode(currentNode) { // currentNode: 사용자 입력 위치 (예: "1")
+    // 모든 화살표와 불꽃을 제거하고 선택된 경로만 표시
+    // removeAllFlameIcons();
+    removeAllArrowIcons();
+
+    if (calculatedEscapeRoutes[currentNode]) {
+        const shortestRoute = calculatedEscapeRoutes[currentNode];
+
+        // 최단 경로가 있고, 출발지와 도착지가 같지 않다면 화살표를 표시
+        if (shortestRoute.exit !== "N/A" && currentNode !== shortestRoute.exit) {
+            showShortestPathArrows(shortestRoute.path);
+        }
+    } else {
+        console.log(`No escape route found for node ${currentNode}`);
+        alert("SOS 도움 요청 신호를 보내세요!!"); // 예시 알림 메시지
+        openSOSPopup();
     }
 }
