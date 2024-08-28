@@ -395,30 +395,48 @@ html {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20%; /* margin-top으로 조정 */
+  margin-top: 20%; /* 기존 margin-top 유지 */
 }
 
-.sos-button img {
+.positioning-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10%; /* 이 값을 조정하여 SOS 버튼 아래에 위치시키기 */
+}
+
+.sos-button img,
+.positioning-button img {
   width: 40px;
   height: 40px;
   margin-right: 10px;
 }
 
-.sos-button:hover {
+.sos-button:hover,
+.positioning-button:hover {
   background-color: #ffcccc; /* 호버 효과 */
 }
 
-.sos-text {
+.sos-text,
+.positioning-text {
   color: black;
   font-size: 14px;
   line-height: 1.5;
 }
 
-.sos-text strong {
+.sos-text strong,
+.positioning-text strong {
   font-size: 18px;
   font-weight: bold;
   display: block;
 }
+
 
 .popup {
   display: none; /* 처음에는 숨김 */
@@ -444,7 +462,7 @@ html {
 }
 
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .input-group label {
@@ -502,3 +520,27 @@ html {
 .pop-button.sos-button {
   right: 10px;
 }
+
+.pop-button.positioning-button {
+  bottom: 10px;
+  right: 10px;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  background-image: url("arrow.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+.flame {
+  width: 40px;
+  height: 40px;
+  background-image: url("flame.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+

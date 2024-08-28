@@ -75,6 +75,15 @@
           <br />탈출이 어려울 경우,<br />바로 신고하기
         </div>
       </div>
+
+      <div class="positioning-button" onclick="openpositioningPopup()">
+        <img src="escape.jpg" alt="탈출경로안내" />
+        <div class="positioning-text">
+          <strong>탈출경로안내</strong>
+          <br />현재 내 위치를 입력하고,<br />맞춤 탈출경로를 확인하세요
+        </div>
+      </div>
+
       <div class="nav">
         <ul>
           <li><img src="escape.jpg" style="width: 50px;"><span>비상구</span></li>
@@ -82,9 +91,52 @@
         </ul>
       </div>
     </aside>
+
+
     <main class="map-container">
-      <img id="mapImage" src="1f.png" alt="Floor Map" class="map-image" />
+      <img id="mapImage" src="1f.png" alt="Floor Map" class="map-image">
+
+      <div class="arrow" id="arrow1A" style="left: 69.5%; top: 20%; transform: rotate(270deg);"></div>
+      <div class="arrow" id="arrowA1" style="left: 69.5%; top: 20%; transform: rotate(90deg);"></div>
+      <div class="arrow" id="arrow12" style="left: 69.5%; top: 37%; transform: rotate(90deg);"></div>
+      <div class="arrow" id="arrow21" style="left: 69.5%; top: 37%; transform: rotate(270deg);"></div>
+      <div class="arrow" id="arrow23" style="left: 69.5%; top: 53%; transform: rotate(90deg);"></div>
+      <div class="arrow" id="arrow32" style="left: 69.5%; top: 53%; transform: rotate(270deg);"></div>
+      <div class="arrow" id="arrow34" style="left: 62%; top: 67%; transform: rotate(180deg);"></div>
+      <div class="arrow" id="arrow43" style="left: 62%; top: 67%; transform: rotate(0deg);"></div>
+      <div class="arrow" id="arrow45" style="left: 51%; top: 60%; transform: rotate(240deg);"></div>
+      <div class="arrow" id="arrow54" style="left: 51%; top: 60%; transform: rotate(60deg);"></div>
+      <div class="arrow" id="arrow56" style="left: 49.5%; top: 37%; transform: rotate(290deg);"></div>
+      <div class="arrow" id="arrow65" style="left: 49.5%; top: 37%; transform: rotate(110deg);"></div>
+      <div class="arrow" id="arrow61" style="left: 60%; top: 27%; transform: rotate(0deg);"></div>
+      <div class="arrow" id="arrow16" style="left: 60%; top: 27%; transform: rotate(180deg);"></div>
+      <div class="arrow" id="arrow2y" style="left: 65%; top: 45%; transform: rotate(180deg);"></div>
+      <div class="arrow" id="arrowy2" style="left: 65%; top: 45%; transform: rotate(0deg);"></div>
+      <div class="arrow" id="arrow3z" style="left: 72.75%; top: 67%; transform: rotate(0deg);"></div>
+      <div class="arrow" id="arrowz3" style="left: 72.75%; top: 67%; transform: rotate(180deg);"></div>
+      <div class="arrow" id="arrow4B" style="left: 54.7%; top: 74.5%; transform: rotate(60deg);"></div>
+      <div class="arrow" id="arrowB4" style="left: 54.7%; top: 74.5%; transform: rotate(240deg);"></div>
+      <div class="arrow" id="arrow5w" style="left: 44.25%; top: 53.75%; transform: rotate(90deg);"></div>
+      <div class="arrow" id="arroww5" style="left: 44.25%; top: 53.75%; transform: rotate(270deg);"></div>
+      <div class="arrow" id="arrow5C" style="left: 44.25%; top: 40.25%; transform: rotate(270deg);"></div>
+      <div class="arrow" id="arrowC5" style="left: 44.25%; top: 40.25%; transform: rotate(90deg);"></div>
+      <div class="arrow" id="arrowx6" style="left: 53.75%; top: 20%; transform: rotate(180deg);"></div>
+      <div class="arrow" id="arrow6x" style="left: 53.75%; top: 20%; transform: rotate(0deg);"></div>
+
+      <div class="flame" id="flame1" style="left: 69.5%; top: 27%;"></div>
+      <div class="flame" id="flame2" style="left: 69.5%; top: 44%;"></div>
+      <div class="flame" id="flame3" style="left: 69.5%; top: 66%;"></div>
+      <div class="flame" id="flame4" style="left: 54%; top: 66%;"></div>
+      <div class="flame" id="flame5" style="left: 47%; top: 47%;"></div>
+      <div class="flame" id="flame6" style="left: 53%; top: 27%;"></div>
+
     </main>
+
+
+
+
+
+
   </div>
   <!--sos 팝업-->
   <!-- Pop-up container -->
@@ -110,9 +162,30 @@
     </div>
   </div>
 
+  <!-- 포지셔닝 팝업 -->
+<div id="positioningPopup" class="popup">
+  <div class="popup-content">
+      <h2>탈출경로 안내</h2>
+      <p>
+          현재 위치의 매장명 또는 노드 번호를 입력하고, 맞춤 탈출 경로를 확인하세요.
+      </p>
+      <!-- 매장명/노드 번호 입력 -->
+      <div class="input-group">
+          <label for="positioningStoreOrNode">매장명/노드 번호</label>
+          <input type="text" id="positioningStoreOrNode" placeholder="매장명 또는 노드 번호 입력" />
+      </div>
+      <!-- 버튼들 -->
+      <div class="pop-button close-button" onclick="closepositioningPopup()">닫기</div>
+      <div class="pop-button positioning-button" onclick="submitPositioning()">경로 확인</div>
+  </div>
+</div>
+
+
+
   <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  <script src="firefindway.js"></script>
   <script src="fire.js"></script>
-  <!-- <script src="firefindway.js"></script> -->
+  
 </body>
 
 </html>

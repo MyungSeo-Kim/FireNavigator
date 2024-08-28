@@ -1,5 +1,6 @@
 window.onload = function () {
   document.getElementById("dangerPopup").style.display = "flex";
+  calculateEscapeRoutes("1,3");
 };
 
 function closeDangerPopup() {
@@ -17,6 +18,28 @@ function openSOSPopup() {
 function closeSOSPopup() {
   document.getElementById("sosPopup").style.display = "none";
 }
+
+function openpositioningPopup() {
+  document.getElementById("positioningPopup").style.display = "flex";
+}
+
+function closepositioningPopup() {
+  document.getElementById("positioningPopup").style.display = "none";
+}
+
+function submitPositioning() {
+  const storeOrNode = document.getElementById("positioningStoreOrNode").value;
+  if (storeOrNode) {
+    alert("탈출 경로를 확인하세요!"); // 예시 알림 메시지
+    closepositioningPopup(); // 팝업을 닫습니다.
+
+    displayEscapeRouteForCurrentNode(storeOrNode);
+  }
+  else {
+    alert("모든 필드를 작성해 주세요.");
+  }
+}
+
 
 const socket = io();
 
