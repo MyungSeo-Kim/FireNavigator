@@ -141,3 +141,15 @@ function showSection(sectionId) {
     .classList.add("active");
 }
 
+document.getElementById('toggleFireStatus').addEventListener('click', () => {
+  fetch('/toggle-fire-status', {
+    method: 'POST'
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('화재 여부가 변경되었습니다:', data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});

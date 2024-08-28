@@ -68,12 +68,17 @@ io.on("connection", (socket) => {
   // 클라이언트가 연결될 때 초기 화재 상태 전송
   socket.emit('fireStatus', isFireDetected);
 
-  console.log("A user connected");
-
   if (useMockData) {
     const interval = setInterval(() => {
       const mockData = generateMockData();
-      io.emit("arduinoData", mockData);
+      const mockDataString = mockData.map(node => `${Math.floor(node.gas) * 100000 + node.flame * 10000 + Math.floor(node.temperature) * 100 + Math.floor(node.humidity)}`).join(",");
+      
+      io.emit('fireStatus', isFireDetected);
+      io.emit("arduinoData", parseArduinoData(`Info:${mockDataString}`));
+
+      // 화재 상태 로그 출력
+      console.log('Mock data fire status:', isFireDetected);
+
     }, 2000);
 
     socket.on("disconnect", () => {
@@ -81,14 +86,6 @@ io.on("connection", (socket) => {
       clearInterval(interval);
     });
   }
-  socket.on('requestFireStatus', () => {
-    socket.emit('fireStatus', isFireDetected);
-  });
-
-  socket.on('fireExtinguished', () => {
-    isFireDetected = false;
-    io.emit('fireStatus', isFireDetected);
-  });
 
   socket.on("sosData", function(sosdata) {
     // console.log(sosdata);
@@ -228,7 +225,7 @@ function parseArduinoData(data) {
     //const previousTemperature = previousData[index] ? previousData[index].temperature : temperature;
     //const temperatureChangeRate = Math.abs(temperature - previousTemperature);
     
-    const isFire = flame > 0 || gas > 100;
+    const isFire = flame > 0;
     
     if (isFire) {
       isFireDetected = true;
@@ -245,18 +242,32 @@ function parseArduinoData(data) {
   });
 }
 
+
+app.post('/toggle-fire-status', (req, res) => {
+  isFireDetected = !isFireDetected; // 화재 여부 상태를 토글
+
+  res.json({ isFireDetected });
+});
+
 function generateMockData() {
   const nodes = [];
   const nodeCount = 6; // 노드 개수 설정
 
   for (let i = 1; i <= nodeCount; i++) {
+    const gas = Math.random() * 1000;
+    const flame = Math.random() > 0.99 ? 1 : 0;
+    const temperature = 20 + Math.random() * 20;
+    const humidity = 50 + Math.random() * 50;
+    // const isFire = flame > 0; // 화재 여부 판별 로직
+    const isFire = isFireDetected;
+
     nodes.push({
       node: `Node${i}`,
-      gas: Math.random() * 1000,
-      flame: Math.random() > 0.5 ? 1 : 0,
-      temperature: 20 + Math.random() * 20,
-      humidity: 50 + Math.random() * 50,
-      isFire: Math.random() > 0.5,
+      gas,
+      flame,
+      temperature,
+      humidity,
+      isFire,
     });
   }
 
