@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>일반 사용자용 페이지-불 났을 경우</title>
-<link rel="stylesheet" href="fire.css" />
+  <link rel="stylesheet" href="fire.css" />
   <script src="/socket.io/socket.io.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -175,29 +175,29 @@
   </div>
 
   <!-- 포지셔닝 팝업 -->
-<div id="positioningPopup" class="popup">
-  <div class="popup-content">
+  <div id="positioningPopup" class="popup">
+    <div class="popup-content">
       <h2>탈출경로 안내</h2>
       <p>
-          현재 위치의 매장명 또는 노드 번호를 입력하고, 맞춤 탈출 경로를 확인하세요.
+        현재 위치의 매장명 또는 노드 번호를 입력하고, 맞춤 탈출 경로를 확인하세요.
       </p>
       <!-- 매장명/노드 번호 입력 -->
       <div class="input-group">
-          <label for="positioningStoreOrNode">매장명/노드 번호</label>
-          <input type="text" id="positioningStoreOrNode" placeholder="매장명 또는 노드 번호 입력" />
+        <label for="positioningStoreOrNode">매장명/노드 번호</label>
+        <input type="text" id="positioningStoreOrNode" placeholder="매장명 또는 노드 번호 입력" />
       </div>
       <!-- 버튼들 -->
       <div class="pop-button close-button" onclick="closepositioningPopup()">닫기</div>
       <div class="pop-button positioning-button" onclick="submitPositioning()">경로 확인</div>
+    </div>
   </div>
-</div>
 
 
 
   <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
   <script src="firefindway.js"></script>
   <script src="fire.js"></script>
-  
+
 </body>
 
 </html>
