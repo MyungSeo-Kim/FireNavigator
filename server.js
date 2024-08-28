@@ -49,10 +49,10 @@ try {
 
   parser.on("data", (data) => {// 아두이노 데이터 수신 시
     //console.log('Received data from Arduino:', data);
-    const parsedData = parseArduinoData(data);
     if (data.startsWith("Info:")) {
       const parsedData = parseArduinoData(data);
       io.emit("arduinoData", parsedData); // 클라이언트로 데이터 전송
+      io.emit('fireStatus', isFireDetected); // 화재 상태 전송
     }  });
   // 시리얼 포트 에러 시 mock 데이터 사용
   port.on("error", (err) => { 
@@ -63,6 +63,43 @@ try {
   console.error("Failed to open serial port:", error.message);
   useMockData = true;
 }
+
+io.on("connection", (socket) => {
+  // 클라이언트가 연결될 때 초기 화재 상태 전송
+  socket.emit('fireStatus', isFireDetected);
+
+  console.log("A user connected");
+
+  if (useMockData) {
+    const interval = setInterval(() => {
+      const mockData = generateMockData();
+      io.emit("arduinoData", mockData);
+    }, 2000);
+
+    socket.on("disconnect", () => {
+      console.log("A user disconnected");
+      clearInterval(interval);
+    });
+  }
+  socket.on('requestFireStatus', () => {
+    socket.emit('fireStatus', isFireDetected);
+  });
+
+  socket.on('fireExtinguished', () => {
+    isFireDetected = false;
+    io.emit('fireStatus', isFireDetected);
+  });
+
+  socket.on("sosData", function(sosdata) {
+    // console.log(sosdata);
+    io.emit('sosData', sosdata);
+  })
+
+});
+
+server.listen(3000, () => {
+  console.log("Server is listening on port 3000");
+});
 
 // http GET 요청 처리-> HTML 파일 제공 함수
 const sendHtmlFile = (res, fileName) => {
@@ -178,31 +215,7 @@ app.get("/admin", adminAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
 
-io.on("connection", (socket) => {
-  console.log("A user connected");
-
-  if (useMockData) {
-    const interval = setInterval(() => {
-      const mockData = generateMockData();
-      io.emit("arduinoData", mockData);
-    }, 2000);
-
-    socket.on("disconnect", () => {
-      console.log("A user disconnected");
-      clearInterval(interval);
-    });
-  }
-
-  socket.on("sosData", function(sosdata) {
-    // console.log(sosdata);
-    io.emit('sosData', sosdata);
-  })
-
-});
-
-server.listen(3000, () => {
-  console.log("Server is listening on port 3000");
-});
+let isFireDetected = false;
 
 function parseArduinoData(data) {
   const nodes = data.replace("Info:", "").split(",").filter((d) => d);
@@ -212,7 +225,14 @@ function parseArduinoData(data) {
     const temperature = Math.floor((node % 10000) / 100); // 2자리수
     const humidity = node % 100; // 2자리수
 
-    const isFire = flame > 0;
+    //const previousTemperature = previousData[index] ? previousData[index].temperature : temperature;
+    //const temperatureChangeRate = Math.abs(temperature - previousTemperature);
+    
+    const isFire = flame > 0 || gas > 100;
+    
+    if (isFire) {
+      isFireDetected = true;
+    }
 
     return {
       node: `Node${index + 1}`,

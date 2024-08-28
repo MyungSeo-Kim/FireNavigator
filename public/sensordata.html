@@ -184,9 +184,9 @@
             console.log('label', label);
 
             if (chart.data.labels.length > 100) {
-                chart.data.labels.shift();
+                chart.data.labels.shift(); // 라벨이 100개 이상이면 가장 오래된 데이터를 제거
                 chart.data.datasets.forEach((dataset) => {
-                    dataset.data.shift();
+                    dataset.data.shift(); // 데이터셋도 100개 이상이면 가장 오래된 데이터를 제거
                 });
             }
 

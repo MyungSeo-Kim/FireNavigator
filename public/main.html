@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>일반 사용자용 페이지-메인</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const socket = io();
+  
+        socket.on('fireStatus', (isFireDetected) => {
+          console.log('Fire status received:', isFireDetected);
+          if (isFireDetected) {
+            window.location.href = 'fire.html';
+          }
+        });
+  
+        // 서버에 초기 화재 상태 요청
+        socket.emit('requestFireStatus');
+      });
+    </script>
   </head>
   <body>
     <div class="page">
