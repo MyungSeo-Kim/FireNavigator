@@ -45,9 +45,9 @@ let useMockData = false;
 // 시리얼 포트 연결 시도
 try { 
   const serialPort = process.env.SERIAL_PORT || "COM5";
-  PORT = new SerialPort({ path: serialPort, baudRate: 9600 });
+  let port = new SerialPort({ path: serialPort, baudRate: 9600 });
   // readline parser로 데이터를 줄 단위로 파싱
-  parser = PORT.pipe(new ReadlineParser({ delimiter: "\r\n" }));
+  parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
   parser.on("data", (data) => {// 아두이노 데이터 수신 시
     //console.log('Received data from Arduino:', data);
@@ -57,7 +57,7 @@ try {
       io.emit('fireStatus', isFireDetected); // 화재 상태 전송
     }  });
   // 시리얼 포트 에러 시 mock 데이터 사용
-  PORT.on("error", (err) => { 
+  port.on("error", (err) => { 
     console.error("Serial port error:", err.message);
     useMockData = true;
   });
