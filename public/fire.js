@@ -51,37 +51,54 @@ function closepositioningPopup() {
 // 매장명을 노드 번호로 변환하는 함수
 function convertStoreToNode(storeOrNode) {
   const storeToNodeMapping = {
-      "루이비통": "6",
-      "프라다": "2",
-      "샤넬": "2",
-      "버버리": "2",
-      "발렌시아가": "2",
-      "디올": "3",
-      "에르메스": "5"
+    "루이비통": "x",
+    "프라다": "y",
+    "샤넬": "y",
+    "버버리": "y",
+    "발렌시아가": "y",
+    "디올": "z",
+    "에르메스": "w"
   };
 
   // storeOrNode가 노드 번호일 경우 그대로 반환
   if (storeToNodeMapping[storeOrNode]) {
-      return storeToNodeMapping[storeOrNode];
+    return storeToNodeMapping[storeOrNode];
   }
 
   return storeOrNode; // 매장명이 아닌 경우(노드 번호인 경우) 그대로 반환
 }
 
+function submitSearchButton() {
+  let storeOrNode = document.getElementById("NodeSearchInput").value.trim();
+
+  if (storeOrNode) {
+    // 매장명을 노드 번호로 변환
+    storeOrNode = convertStoreToNode(storeOrNode);
+
+    alert("탈출 경로를 확인하세요!"); // 예시 알림 메시지
+    closepositioningPopup(); // 팝업을 닫습니다.
+
+    displayEscapeRouteForCurrentNode(storeOrNode);
+  } else {
+    alert("모든 필드를 작성해 주세요.");
+  }
+
+}
+
 // submitPositioning 함수 수정
 function submitPositioning() {
   let storeOrNode = document.getElementById("positioningStoreOrNode").value.trim();
-  
+
   if (storeOrNode) {
-      // 매장명을 노드 번호로 변환
-      storeOrNode = convertStoreToNode(storeOrNode);
+    // 매장명을 노드 번호로 변환
+    storeOrNode = convertStoreToNode(storeOrNode);
 
-      alert("탈출 경로를 확인하세요!"); // 예시 알림 메시지
-      closepositioningPopup(); // 팝업을 닫습니다.
+    alert("탈출 경로를 확인하세요!"); // 예시 알림 메시지
+    closepositioningPopup(); // 팝업을 닫습니다.
 
-      displayEscapeRouteForCurrentNode(storeOrNode);
+    displayEscapeRouteForCurrentNode(storeOrNode);
   } else {
-      alert("모든 필드를 작성해 주세요.");
+    alert("모든 필드를 작성해 주세요.");
   }
 }
 
