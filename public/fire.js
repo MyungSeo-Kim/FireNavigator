@@ -48,16 +48,40 @@ function closepositioningPopup() {
   document.getElementById("positioningPopup").style.display = "none";
 }
 
-function submitPositioning() {
-  const storeOrNode = document.getElementById("positioningStoreOrNode").value;
-  if (storeOrNode) {
-    alert("탈출 경로를 확인하세요!"); // 예시 알림 메시지
-    closepositioningPopup(); // 팝업을 닫습니다.
+// 매장명을 노드 번호로 변환하는 함수
+function convertStoreToNode(storeOrNode) {
+  const storeToNodeMapping = {
+      "루이비통": "6",
+      "프라다": "2",
+      "샤넬": "2",
+      "버버리": "2",
+      "발렌시아가": "2",
+      "디올": "3",
+      "에르메스": "5"
+  };
 
-    displayEscapeRouteForCurrentNode(storeOrNode);
+  // storeOrNode가 노드 번호일 경우 그대로 반환
+  if (storeToNodeMapping[storeOrNode]) {
+      return storeToNodeMapping[storeOrNode];
   }
-  else {
-    alert("모든 필드를 작성해 주세요.");
+
+  return storeOrNode; // 매장명이 아닌 경우(노드 번호인 경우) 그대로 반환
+}
+
+// submitPositioning 함수 수정
+function submitPositioning() {
+  let storeOrNode = document.getElementById("positioningStoreOrNode").value.trim();
+  
+  if (storeOrNode) {
+      // 매장명을 노드 번호로 변환
+      storeOrNode = convertStoreToNode(storeOrNode);
+
+      alert("탈출 경로를 확인하세요!"); // 예시 알림 메시지
+      closepositioningPopup(); // 팝업을 닫습니다.
+
+      displayEscapeRouteForCurrentNode(storeOrNode);
+  } else {
+      alert("모든 필드를 작성해 주세요.");
   }
 }
 
