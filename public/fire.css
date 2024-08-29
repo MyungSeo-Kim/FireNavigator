@@ -293,16 +293,40 @@ p span {
 
 .map-container {
   flex: 1;
-  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  height: 100%;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
 }
 
 .map-image {
-  width: 80%;
-  max-width: 600px;
+  width: 100%;
   height: auto;
+  display: block;
+}
+
+.arrow,
+.flame {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.arrow {
+  background-image: url("arrow.png");
+}
+
+.flame {
+  background-image: url("flame.png");
 }
 
 /* 기본 스타일 설정 */
@@ -437,7 +461,6 @@ html {
   display: block;
 }
 
-
 .popup {
   display: none; /* 처음에는 숨김 */
   position: fixed;
@@ -525,22 +548,3 @@ html {
   bottom: 10px;
   right: 10px;
 }
-
-.arrow {
-  width: 40px;
-  height: 40px;
-  background-image: url("arrow.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-}
-
-.flame {
-  width: 40px;
-  height: 40px;
-  background-image: url("flame.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-}
-

@@ -220,7 +220,7 @@ function parseArduinoData(data) {
     }
 
     return {
-      node: `${index + 1}`,
+      node: `Node${index + 1}`,
       gas,
       flame,
       temperature,

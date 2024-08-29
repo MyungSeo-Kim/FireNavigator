@@ -7,8 +7,8 @@ window.onload = function () {
 socket.on('arduinoData', (parsedData) => {
   // console.log(parsedData);
   const fireNodeList = parsedData.filter(node => node.isFire === true);
-  let fireNodeNumbers = fireNodeList.map(node => node.node).join(',');
-
+  let fireNodeNumbers = fireNodeList.map(node => node.node.replace('Node', '')).join(',');
+  
   if (fireNodeNumbers.length === 0) {
     fireNodeNumbers = "N/A";
 }
