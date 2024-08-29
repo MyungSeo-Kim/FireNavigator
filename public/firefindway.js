@@ -289,7 +289,7 @@ let calculatedEscapeRoutes = {}; // 각 노드별 최단 경로를 저장할 객
 
 function calculateEscapeRoutes(fireNodesInput) {
     console.log(fireNodesInput);
-    const fireNodes = String(fireNodesInput).split(',');
+    const fireNodes = fireNodesInput.split(',').map(node => node.trim());
 
     // 모든 노드의 화재 상태 초기화
     for (let node in nodes) {
@@ -326,6 +326,9 @@ function calculateEscapeRoutes(fireNodesInput) {
             let shortestRoute = routes.reduce((minRoute, currentRoute) => {
                 return currentRoute.distance < minRoute.distance ? currentRoute : minRoute;
             });
+
+            // `calculatedEscapeRoutes`에 저장
+            calculatedEscapeRoutes[node] = shortestRoute;
 
             // 최단 경로가 있고, 출발지와 도착지가 같지 않다면 화살표를 표시
             if (shortestRoute.exit !== "N/A" && node !== shortestRoute.exit) {
@@ -364,18 +367,27 @@ function calculateEscapeRoutes(fireNodesInput) {
 
 
 // 특정 노드에 대한 경로만 표시하는 함수
-function displayEscapeRouteForCurrentNode(currentNode) { // currentNode: 사용자 입력 위치 (예: "1")
+function displayEscapeRouteForCurrentNode(currentNode) { // currentNode: 사용자 입력 위치 (예: "1" 또는 "A1")
     // 모든 화살표와 불꽃을 제거하고 선택된 경로만 표시
-    // removeAllFlameIcons();
     removeAllArrowIcons();
+    console.log(calculatedEscapeRoutes);
+
+    // currentNode를 문자열로 처리
+    currentNode = currentNode.trim();
 
     if (calculatedEscapeRoutes[currentNode]) {
         const shortestRoute = calculatedEscapeRoutes[currentNode];
 
         // 최단 경로가 있고, 출발지와 도착지가 같지 않다면 화살표를 표시
-        if (shortestRoute.exit !== "N/A" && currentNode !== shortestRoute.exit) {
+        if (shortestRoute.exit !== "N/A" && shortestRoute.exit !== "SOS") {
             showShortestPathArrows(shortestRoute.path);
         }
+        else {
+            console.log(`No escape route found for node ${currentNode}`);
+            alert("SOS 도움 요청 신호를 보내세요!!"); // 예시 알림 메시지
+            openSOSPopup();
+        }
+
     } else {
         console.log(`No escape route found for node ${currentNode}`);
         alert("SOS 도움 요청 신호를 보내세요!!"); // 예시 알림 메시지
