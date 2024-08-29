@@ -1,7 +1,23 @@
+const socket = io();
+
 window.onload = function () {
   document.getElementById("dangerPopup").style.display = "flex";
-  calculateEscapeRoutes("1,3");
 };
+
+socket.on('arduinoData', (parsedData) => {
+  // console.log(parsedData);
+  const fireNodeList = parsedData.filter(node => node.isFire === true);
+  let fireNodeNumbers = fireNodeList.map(node => node.node).join(',');
+
+  if (fireNodeNumbers.length === 0) {
+    fireNodeNumbers = "N/A";
+}
+
+  console.log(fireNodeNumbers);
+  if (fireNodeNumbers !== "N/A") {
+    calculateEscapeRoutes(fireNodeNumbers);
+  }
+});
 
 function closeDangerPopup() {
   const dangerPopup = document.getElementById("dangerPopup");
@@ -39,9 +55,6 @@ function submitPositioning() {
     alert("모든 필드를 작성해 주세요.");
   }
 }
-
-
-const socket = io();
 
 function submitSOS() {
   const storeOrNode = document.getElementById("storeOrNode").value;
@@ -145,11 +158,11 @@ document.getElementById('toggleFireStatus').addEventListener('click', () => {
   fetch('/toggle-fire-status', {
     method: 'POST'
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log('화재 여부가 변경되었습니다:', data);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+    .then(response => response.json())
+    .then(data => {
+      console.log('화재 여부가 변경되었습니다:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 });

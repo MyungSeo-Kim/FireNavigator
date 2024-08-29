@@ -108,51 +108,47 @@ app.get("/", (req, res) => sendHtmlFile(res, "main.html"));
 app.get("/admin2", (req, res) => sendHtmlFile(res, "admin2.html"));
 app.get("fire", (req, res) => sendHtmlFile(res, "fire.html"));
 app.get("/main", (req, res) => sendHtmlFile(res, "main.html"));
-app.get("/page1", (req, res) => sendHtmlFile(res, "page1.html"));
-app.get("/page2", (req, res) => sendHtmlFile(res, "page2.html"));
-app.get("/page3", (req, res) => sendHtmlFile(res, "page3.html"));
-app.get("/test", (req, res) => sendHtmlFile(res, "test.html"));
 app.get("/findway", (req, res) => sendHtmlFile(res, "findway_test.html"));
 
 
 const stores = {
-  '1F' : {
-    '101': { name: '루이비통', x: 310, y: 1200 },      //여기서 x,y 좌표 안쓰는 느낌 
-    '102': { name: '에르메스', x: 200, y: 300 },
-    '103': { name: '디올', x: 150, y: 250 },
-    '104': { name: '프라다', x: 250, y: 350 },
-    '105': { name: '샤넬', x: 300, y: 400 },
-    '106': { name: '버버리', x: 350, y: 450 },
-    '107': { name: '발렌시아가', x: 400, y: 500 }
+  '1F': {
+    '101': { name: '루이비통' },
+    '102': { name: '에르메스' },
+    '103': { name: '디올' },
+    '104': { name: '프라다' },
+    '105': { name: '샤넬' },
+    '106': { name: '버버리' },
+    '107': { name: '발렌시아가' }
   },
-  '2F' : {
-    '201': { name: '보테가베네타', x: 100, y: 200 },
-    '202': { name: '젠틀몬스터', x: 200, y: 300 },
-    '203': { name: '구찌', x: 150, y: 250 },
-    '204': { name: '발렌티노', x: 250, y: 350 },
-    '205': { name: '몽블랑', x: 300, y: 400 },
-    '206': { name: '롤렉스', x: 350, y: 450 },
-    '207': { name: '톰브라운', x: 400, y: 500 }
+  '2F': {
+    '201': { name: '보테가베네타' },
+    '202': { name: '젠틀몬스터' },
+    '203': { name: '구찌' },
+    '204': { name: '발렌티노' },
+    '205': { name: '몽블랑' },
+    '206': { name: '롤렉스' },
+    '207': { name: '톰브라운' }
   },
-  '3F' : {
-    '301': { name: '꼼데가르송', x: 100, y: 200 },
-    '302': { name: '스톤아일랜드', x: 200, y: 300 },
-    '303': { name: '아미', x: 150, y: 250 },
-    '304': { name: '띠어리', x: 250, y: 350 },
-    '305': { name: 'A.P.C.', x: 300, y: 400 },
-    '306': { name: '송지오', x: 350, y: 450 },
-    '307': { name: '메종키츠네', x: 400, y: 500 }
+  '3F': {
+    '301': { name: '꼼데가르송' },
+    '302': { name: '스톤아일랜드' },
+    '303': { name: '아미' },
+    '304': { name: '띠어리' },
+    '305': { name: 'A.P.C.' },
+    '306': { name: '송지오' },
+    '307': { name: '메종키츠네' }
   },
-  '4F' : {
-    '401': { name: '나이키', x: 100, y: 200 },
-    '402': { name: '아디다스', x: 200, y: 300 },
-    '403': { name: '퓨마', x: 150, y: 250 },
-    '404': { name: '뉴발란스', x: 250, y: 350 },
-    '405': { name: '리복', x: 300, y: 400 },
-    '406': { name: '휠라', x: 350, y: 450 },
-    '407': { name: '언더아머', x: 400, y: 500 }
+  '4F': {
+    '401': { name: '나이키' },
+    '402': { name: '아디다스' },
+    '403': { name: '퓨마' },
+    '404': { name: '뉴발란스' },
+    '405': { name: '리복' },
+    '406': { name: '휠라' },
+    '407': { name: '언더아머' }
   }
-}
+};
 
 
 app.get('/search-store', (req, res) => {
@@ -177,14 +173,6 @@ app.get('/search-store', (req, res) => {
   res.json(storeData);
 });
 
-
-
-// // SOS 알림 전송 엔드포인트
-// app.post('/send-sos', (req, res) => {
-//   const { node } = req.body;
-//   io.emit('sos-alert', { node }); // 모든 연결된 클라이언트에 SOS 알림 전송
-//   res.json({ success: true });
-// });
 
 // 관리자 번호 확인 엔드포인트
 app.post("/check-admin-code", (req, res) => {
@@ -232,7 +220,7 @@ function parseArduinoData(data) {
     }
 
     return {
-      node: `Node${index + 1}`,
+      node: `${index + 1}`,
       gas,
       flame,
       temperature,
