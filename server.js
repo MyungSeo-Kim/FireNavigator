@@ -1,3 +1,4 @@
+require('dotenv').config(); // .env 파일에서 환경 변수 로드
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -37,15 +38,16 @@ app.use(
   })
 );
 
-let port;
+const PORT = process.env.PORT || 3000;
 let parser;
 let useMockData = false;
 
 // 시리얼 포트 연결 시도
 try { 
-  port = new SerialPort({ path: "COM5", baudRate: 9600 });
+  const serialPort = process.env.SERIAL_PORT || "COM5";
+  PORT = new SerialPort({ path: serialPort, baudRate: 9600 });
   // readline parser로 데이터를 줄 단위로 파싱
-  parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
+  parser = PORT.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
   parser.on("data", (data) => {// 아두이노 데이터 수신 시
     //console.log('Received data from Arduino:', data);
@@ -55,7 +57,7 @@ try {
       io.emit('fireStatus', isFireDetected); // 화재 상태 전송
     }  });
   // 시리얼 포트 에러 시 mock 데이터 사용
-  port.on("error", (err) => { 
+  PORT.on("error", (err) => { 
     console.error("Serial port error:", err.message);
     useMockData = true;
   });
@@ -94,8 +96,8 @@ io.on("connection", (socket) => {
 
 });
 
-server.listen(3000, () => {
-  console.log("Server is listening on port 3000");
+server.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
 
 // http GET 요청 처리-> HTML 파일 제공 함수
