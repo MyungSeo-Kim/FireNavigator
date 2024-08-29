@@ -1,23 +1,26 @@
 const socket = io();
+let flag;
 
 window.onload = function () {
   document.getElementById("dangerPopup").style.display = "flex";
   removeAllFlameIcons(); // 기존의 불꽃 이미지 제거
   removeAllArrowIcons(); // 기존의 화살표 이미지 제거
+  flag = true;
 };
 
 socket.on('arduinoData', (parsedData) => {
   // console.log(parsedData);
   const fireNodeList = parsedData.filter(node => node.isFire === true);
   let fireNodeNumbers = fireNodeList.map(node => node.node.replace('Node', '')).join(',');
-  
+
   if (fireNodeNumbers.length === 0) {
     fireNodeNumbers = "N/A";
-}
+  }
 
   console.log(fireNodeNumbers);
-  if (fireNodeNumbers !== "N/A") {
+  if (fireNodeNumbers !== "N/A" && flag) {
     calculateEscapeRoutes(fireNodeNumbers);
+    flag = false;
   }
 });
 
