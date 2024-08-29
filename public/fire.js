@@ -2,6 +2,8 @@ const socket = io();
 
 window.onload = function () {
   document.getElementById("dangerPopup").style.display = "flex";
+  removeAllFlameIcons(); // 기존의 불꽃 이미지 제거
+  removeAllArrowIcons(); // 기존의 화살표 이미지 제거
 };
 
 socket.on('arduinoData', (parsedData) => {
