@@ -43,21 +43,21 @@ let parser;
 let useMockData = false;
 
 // 시리얼 포트 연결 시도
-try { 
-  const serialPort = process.env.SERIAL_PORT || "COM6";
+try {
+  // const serialPort = process.env.SERIAL_PORT || "COM6";
   // let port = new SerialPort({ path: serialPort, baudRate: 9600 });
-  let port = new SerialPort({path:"COM6", baudRate: 9600 });
+  let port = new SerialPort({ path: "COM5", baudRate: 9600 });
   // readline parser로 데이터를 줄 단위로 파싱
   parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
   parser.on("data", (data) => {// 아두이노 데이터 수신 시
     console.log('Received data from Arduino:', data);
-      const parsedData = parseArduinoData(data);
-      io.emit("arduinoData", parsedData); // 클라이언트로 데이터 전송
-      io.emit('fireStatus', isFireDetected); // 화재 상태 전송
-     });
+    const parsedData = parseArduinoData(data);
+    io.emit("arduinoData", parsedData); // 클라이언트로 데이터 전송
+    io.emit('fireStatus', isFireDetected); // 화재 상태 전송
+  });
   // 시리얼 포트 에러 시 mock 데이터 사용
-  port.on("error", (err) => { 
+  port.on("error", (err) => {
     console.error("Serial port error:", err.message);
     useMockData = true;
   });
@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
     const interval = setInterval(() => {
       const mockData = generateMockData();
       const mockDataString = mockData.map(node => `${Math.floor(node.gas) * 100000 + node.flame * 10000 + Math.floor(node.temperature) * 100 + Math.floor(node.humidity)}`).join(",");
-      
+
       io.emit('fireStatus', isFireDetected);
       io.emit("arduinoData", parseArduinoData(`Info:${mockDataString}`));
 
@@ -89,7 +89,7 @@ io.on("connection", (socket) => {
     });
   }
 
-  socket.on("sosData", function(sosdata) {
+  socket.on("sosData", function (sosdata) {
     // console.log(sosdata);
     io.emit('sosData', sosdata);
   })
@@ -214,9 +214,9 @@ function parseArduinoData(data) {
 
     //const previousTemperature = previousData[index] ? previousData[index].temperature : temperature;
     //const temperatureChangeRate = Math.abs(temperature - previousTemperature);
-    
+
     const isFire = flame > 0;
-    
+
     if (isFire) {
       isFireDetected = true;
     }
