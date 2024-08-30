@@ -44,18 +44,18 @@ let useMockData = false;
 
 // 시리얼 포트 연결 시도
 try { 
-  const serialPort = process.env.SERIAL_PORT || "COM5";
-  let port = new SerialPort({ path: serialPort, baudRate: 9600 });
+  const serialPort = process.env.SERIAL_PORT || "COM6";
+  // let port = new SerialPort({ path: serialPort, baudRate: 9600 });
+  let port = new SerialPort({path:"COM6", baudRate: 9600 });
   // readline parser로 데이터를 줄 단위로 파싱
   parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
   parser.on("data", (data) => {// 아두이노 데이터 수신 시
-    //console.log('Received data from Arduino:', data);
-    if (data.startsWith("Info:")) {
+    console.log('Received data from Arduino:', data);
       const parsedData = parseArduinoData(data);
       io.emit("arduinoData", parsedData); // 클라이언트로 데이터 전송
       io.emit('fireStatus', isFireDetected); // 화재 상태 전송
-    }  });
+     });
   // 시리얼 포트 에러 시 mock 데이터 사용
   port.on("error", (err) => { 
     console.error("Serial port error:", err.message);
@@ -205,7 +205,7 @@ app.get("/admin", adminAuth, (req, res) => {
 let isFireDetected = false;
 
 function parseArduinoData(data) {
-  const nodes = data.replace("Info:", "").split(",").filter((d) => d);
+  const nodes = data.replace("Received data from Arduino:", "").split(",").filter((d) => d);
   return nodes.map((node, index) => {
     const gas = Math.floor(node / 100000) % 1000; // 3자리수
     const flame = Math.floor((node % 100000) / 10000); // 1자리수
