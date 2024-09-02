@@ -1,5 +1,6 @@
 const socket = io();
 let flag;
+let beforefire;
 
 window.onload = function () {
   document.getElementById("dangerPopup").style.display = "flex";
@@ -17,11 +18,16 @@ socket.on('arduinoData', (parsedData) => {
     fireNodeNumbers = "N/A";
   }
 
-  console.log(fireNodeNumbers);
-  if (fireNodeNumbers !== "N/A" && flag) {
+  // fireNodeNumbers = "2,4";
+  // console.log("fireNodeNumbers : ", fireNodeNumbers);
+  // console.log("before : ", beforefire);
+  if (fireNodeNumbers !== "N/A" && beforefire !== fireNodeNumbers) {
     calculateEscapeRoutes(fireNodeNumbers);
     flag = false;
   }
+
+  beforefire = fireNodeNumbers;
+
 });
 
 function closeDangerPopup() {
