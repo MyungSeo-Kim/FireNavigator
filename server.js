@@ -221,14 +221,26 @@ function parseArduinoData(data) {
       isFireDetected = true;
     }
 
-    return {
-      node: `Node${index + 1}`,
-      gas,
-      flame,
-      temperature,
-      humidity,
-      isFire,
-    };
+    if (index === 4) {
+      return {
+        node: `Node${index + 2}`,
+        gas,
+        flame,
+        temperature,
+        humidity,
+        isFire,
+      };
+    }
+    else {
+      return {
+        node: `Node${index + 1}`,
+        gas,
+        flame,
+        temperature,
+        humidity,
+        isFire,
+      };
+    }
   });
 }
 

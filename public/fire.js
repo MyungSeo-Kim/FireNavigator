@@ -25,6 +25,10 @@ socket.on('arduinoData', (parsedData) => {
     calculateEscapeRoutes(fireNodeNumbers);
     flag = false;
   }
+  else if (fireNodeNumbers === "N/A" && beforefire !== fireNodeNumbers) {
+    removeAllFlameIcons(); // 기존의 불꽃 이미지 제거
+    removeAllArrowIcons(); // 기존의 화살표 이미지 제거
+  }
 
   beforefire = fireNodeNumbers;
 
